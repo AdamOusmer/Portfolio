@@ -1,32 +1,37 @@
 ---
-import PrimaryButton from '../ui/buttons/primaryButton.astro';
-import SecondaryButton from '../ui/buttons/secondaryButton.astro';
+import Button from '../ui/buttons/Button.astro';
+import Magnetic from '../ui/Magnetic.astro';
+import PageEntrance from '../ui/PageEntrance.astro';
 ---
 
-<header>
-    <div class="hero-content parallax" style="--parallax-speed: 0.3">
-        <div class="page-reveal">
-            <h1>Adam Ousmer</h1>
-            <span class="page-title-line"></span>
-        </div>
-        <h2 class="page-stagger">Software Engineering Student at Concordia University</h2>
+<PageEntrance>
+    <header>
+        <div class="hero-content parallax" style="--parallax-speed: 0.3">
+            <div class="page-reveal">
+                <h1>Adam Ousmer</h1>
+                <span class="page-title-line"></span>
+            </div>
+            <h2 class="page-stagger">Software Engineering Student at Concordia University</h2>
 
         <p class="page-stagger">
             I build things for the web and study how software systems work end to end.
             Currently focused on full-stack development, infrastructure, and interface design.
         </p>
 
-        <div class="hero-buttons page-stagger">
-            <PrimaryButton href="/contact" text="Contact me" width="150px" height="40px" />
-            <SecondaryButton href="/#projects" text="Projects" width="150px" height="40px" />
-        </div>
+            <div class="hero-buttons page-stagger">
+                <Button href="/contact" text="Get in touch" variant="primary" width="170px" height="45px" />
+                <Button href="/#projects" text="Projects" variant="secondary" width="170px" height="45px" />
+            </div>
 
-        <a href="#skills" class="scroll-indicator page-stagger" aria-label="Scroll to Skills Section">
-            <div class="mouse"></div>
-            <p>Scroll</p>
-        </a>
-    </div>
-</header>
+            <Magnetic pull={0.1}>
+                <a href="#skills" class="scroll-indicator page-stagger" aria-label="Scroll to Skills Section">
+                    <div class="mouse"></div>
+                    <p>Scroll</p>
+                </a>
+            </Magnetic>
+        </div>
+    </header>
+</PageEntrance>
 
 <style>
     header {
@@ -98,8 +103,6 @@ import SecondaryButton from '../ui/buttons/secondaryButton.astro';
     .scroll-indicator p {
         font-family: 'Space Mono', monospace;
         font-size: 0.75rem;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
         margin: 0;
         color: var(--text-muted);
     }
@@ -150,4 +153,4 @@ import SecondaryButton from '../ui/buttons/secondaryButton.astro';
     }
 </style>
 
-<script src="../../scripts/page-entrance.js"></script>
+

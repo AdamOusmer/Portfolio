@@ -1,7 +1,7 @@
 ---
 import Layout from './layout.astro';
-import Nodes from '../components/layout/node.astro';
-import PrimaryButton from '../components/ui/buttons/primaryButton.astro';
+import Button from '../components/ui/buttons/Button.astro';
+import PageEntrance from '../components/ui/PageEntrance.astro';
 
 interface Props {
     title: string;
@@ -14,9 +14,8 @@ const { title, description, errorCode, errorMessage } = Astro.props;
 ---
 
 <Layout title={title} description={description}>
-    <Nodes />
-
-    <header>
+    <PageEntrance>
+        <header>
         <div class="parallax" style="--parallax-speed: 0.3">
             <div class="page-reveal">
                 <h1>{errorCode}</h1>
@@ -27,12 +26,10 @@ const { title, description, errorCode, errorMessage } = Astro.props;
     </header>
 
     <main class="error-main page-stagger">
-        <PrimaryButton href="/" text="Return to Home" />
+        <Button href="/" text="Return to Home" variant="primary" />
     </main>
+    </PageEntrance>
 </Layout>
-
-<script src="../scripts/page-entrance.js"></script>
-
 <style>
     header {
         position: relative;

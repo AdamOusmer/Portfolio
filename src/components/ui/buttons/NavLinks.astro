@@ -1,0 +1,67 @@
+---
+interface Props {
+    href: string;
+    label: string; // Required (no '?')
+    rel?: string;  // Optional
+    target?: '_blank' | '_self' | '_parent' | '_top'; // Optional
+}
+
+const {
+    href,
+    label,
+    rel,
+    target = '_self'
+} = Astro.props;
+---
+
+<a href={href} target={target} rel={rel}>
+    {label}
+</a>
+
+<style>
+    a {
+        position: relative;
+        display: inline-block;
+        text-align: center;
+
+
+        background-image: linear-gradient(
+                to right,
+                var(--primary-green),
+                var(--primary-green) 50%,
+                var(--text-main) 50%
+        );
+        background-size: 200% 100%;
+        background-position: -100%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+
+        transition: all 500ms ease-in-out;
+
+        font-family: 'Space Mono', monospace;
+        font-size: inherit;
+    }
+
+    a:before {
+        content: '';
+        position: absolute;
+        display: block;
+
+        height: 1px;
+        width: 0;
+
+        bottom: 15%;
+        left: 0;
+
+        background: var(--primary-green);
+        transition: all 500ms ease-in-out;
+    }
+
+    a:hover:before {
+        width: 100%;
+    }
+
+    a:hover {
+        background-position: 0;
+    }
+</style>

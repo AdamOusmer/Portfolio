@@ -1,0 +1,97 @@
+---
+import Magnetic from '../Magnetic.astro';
+
+interface Props {
+    href: string;
+    text: string;
+    variant?: 'primary' | 'secondary';
+    width?: string;
+    height?: string;
+}
+
+const { href, text, variant = 'primary', width, height } = Astro.props;
+---
+
+<Magnetic pull={0.15}>
+    <a
+        href={href}
+        class:list={["btn", variant]}
+        style={`${width ? `width: ${width};` : ''}${height ? `height: ${height};` : ''}`}
+    >
+        <span>{text}</span>
+    </a>
+</Magnetic>
+
+<style>
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: .7rem 1.75rem;
+        border-radius: 999px;
+        font-size: 15px;
+        font-weight: 500;
+        text-decoration: none;
+        position: relative;
+        overflow: hidden;
+        transition: color 0.25s, transform 80ms ease;
+    }
+
+    .btn span {
+        position: relative;
+        z-index: 1;
+    }
+
+    .btn::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        transform: translateY(100%);
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 0;
+    }
+
+    .btn:hover::before {
+        transform: translateY(0);
+    }
+
+    .btn:active {
+        transform: scale(0.97);
+    }
+
+    .btn:focus-visible {
+        outline: 2px solid var(--primary-green);
+        outline-offset: 3px;
+    }
+
+    /* Primary variant */
+    .btn.primary {
+        color: var(--bg-color);
+        background: var(--primary-green);
+    }
+
+    .btn.primary::before {
+        background: var(--deep-green);
+    }
+
+    .btn.primary:hover {
+        color: var(--text-main);
+    }
+
+    /* Secondary variant */
+    .btn.secondary {
+        color: var(--text-main);
+        background: transparent;
+        outline: 1.5px solid var(--border-color);
+        transition: color 0.25s, outline-color 0.25s, transform 80ms ease;
+    }
+
+    .btn.secondary::before {
+        background: var(--surface-color);
+    }
+
+    .btn.secondary:hover {
+        outline-color: var(--primary-green);
+    }
+</style>

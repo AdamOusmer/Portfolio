@@ -1,19 +1,28 @@
 ---
+import NavLink from '../ui/buttons/NavLinks.astro'
+import Magnetic from '../ui/Magnetic.astro'
+
+const links = [
+    {href: "/", label: "Home"},
+    {href: "#projects", label: "Projects"},
+    {href: "/blog", label: "Blog"},
+    {href: "/contact", label: "Contact"},
+];
 
 ---
 
-
-<div class="button">
-    <input id="checkbox" type="checkbox">
-    <label class="toggle" for="checkbox" aria-label="Toggle navigation">
-        <span class="bar bar-1"></span>
-        <span class="bar bar-2"></span>
-        <span class="bar bar-3"></span>
-    </label>
-</div>
-
-
-<nav>
+<site-navigation>
+    <Magnetic pull={0.3} class="button">
+        <div style="display: contents;">
+            <input class="nav-checkbox" type="checkbox" aria-label="Toggle navigation">
+            <label class="toggle" aria-label="Toggle navigation">
+                <span class="bar bar-1"></span>
+                <span class="bar bar-2"></span>
+                <span class="bar bar-3"></span>
+            </label>
+        </div>
+    </Magnetic>
+    <nav>
 
     <svg class="curved-svg">
         <defs>
@@ -26,16 +35,15 @@
     <pre>Navigation</pre>
 
     <ul id="nav">
-        <li><a href="/">Home</a></li>
-        <li><a href="/#projects">Projects</a></li>
-        <li><a href="/blog">Blog</a></li>
-        <li><a href="/contact">Contact</a></li>
+        {links.map((link) => (
+                <li><NavLink href={link.href} label={link.label}/></li>
+        ))}
     </ul>
 
 
     <ul id="links">
-        <li><a href="https://github.com/itsmavey" rel="noopener noreferrer" target="_blank">Github</a></li>
-        <li><a href="https://linkedin.com/in/adam-ousmer" rel="noopener noreferrer" target="_blank">LinkedIn</a></li>
+        <li><NavLink label="Github" href="https://github.com/adamousmer" rel="noopener noreferrer" target="_blank" /></li>
+        <li><NavLink label="LinkedIn" href="https://linkedin.com/in/adam-ousmer" rel="noopener noreferrer" target="_blank" /></li>
     </ul>
 
 </nav>
@@ -43,14 +51,14 @@
 
 <style>
 
-    .button {
+    :global(.button) {
         position: fixed;
-        top: 20px;
+        top: 14px;
         left: 20px;
         z-index: 1000;
     }
 
-    #checkbox {
+    .nav-checkbox {
         display: none;
     }
 
@@ -80,54 +88,48 @@
 
     .bar-1 {
         top: 10px;
-        transition:
-            top 0.45s 0.12s cubic-bezier(0.68, -0.55, 0.27, 1.55),
-            transform 0.45s 0.12s cubic-bezier(0.68, -0.55, 0.27, 1.55),
-            background 0.35s ease;
+        transition: top 0.45s 0.12s cubic-bezier(0.68, -0.55, 0.27, 1.55),
+        transform 0.45s 0.12s cubic-bezier(0.68, -0.55, 0.27, 1.55),
+        background 0.35s ease;
     }
 
     .bar-2 {
         top: 17px;
-        transition:
-            transform 0.2s ease,
-            opacity 0.2s ease;
+        transition: transform 0.2s ease,
+        opacity 0.2s ease;
     }
 
     .bar-3 {
         top: 24px;
-        transition:
-            top 0.45s 0.12s cubic-bezier(0.68, -0.55, 0.27, 1.55),
-            transform 0.45s 0.12s cubic-bezier(0.68, -0.55, 0.27, 1.55),
-            background 0.35s ease;
+        transition: top 0.45s 0.12s cubic-bezier(0.68, -0.55, 0.27, 1.55),
+        transform 0.45s 0.12s cubic-bezier(0.68, -0.55, 0.27, 1.55),
+        background 0.35s ease;
     }
 
     /* ── Open → X state ── */
-    #checkbox:checked + .toggle .bar-1 {
+    .site-nav-open .bar-1 {
         top: 17px;
         transform: rotate(45deg);
         background: var(--primary-green);
-        transition:
-            top 0.35s cubic-bezier(0.68, -0.55, 0.27, 1.55),
-            transform 0.45s 0.1s cubic-bezier(0.68, -0.55, 0.27, 1.55),
-            background 0.35s 0.15s ease;
+        transition: top 0.35s cubic-bezier(0.68, -0.55, 0.27, 1.55),
+        transform 0.45s 0.1s cubic-bezier(0.68, -0.55, 0.27, 1.55),
+        background 0.35s 0.15s ease;
     }
 
-    #checkbox:checked + .toggle .bar-2 {
+    .site-nav-open .bar-2 {
         transform: scaleX(0) rotate(45deg);
         opacity: 0;
-        transition:
-            transform 0.25s cubic-bezier(0.55, 0, 1, 0.45),
-            opacity 0.2s ease;
+        transition: transform 0.25s cubic-bezier(0.55, 0, 1, 0.45),
+        opacity 0.2s ease;
     }
 
-    #checkbox:checked + .toggle .bar-3 {
+    .site-nav-open .bar-3 {
         top: 17px;
         transform: rotate(-45deg);
         background: var(--primary-green);
-        transition:
-            top 0.35s cubic-bezier(0.68, -0.55, 0.27, 1.55),
-            transform 0.45s 0.1s cubic-bezier(0.68, -0.55, 0.27, 1.55),
-            background 0.35s 0.15s ease;
+        transition: top 0.35s cubic-bezier(0.68, -0.55, 0.27, 1.55),
+        transform 0.45s 0.1s cubic-bezier(0.68, -0.55, 0.27, 1.55),
+        background 0.35s 0.15s ease;
     }
 
     .curved-svg {
@@ -173,60 +175,10 @@
 
         height: 85%;
         width: 100%;
-
-
     }
 
-
-    nav ul li a {
-        position: relative;
-        display: inline-block;
-        text-align: center;
-
-
-        background-image: linear-gradient(
-                to right,
-                var(--primary-green),
-                var(--primary-green) 50%,
-                var(--text-main) 50%
-        );
-        background-size: 200% 100%;
-        background-position: -100%;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-
-        transition: all 500ms ease-in-out;
-    }
-
-    nav ul li a:before {
-        content: '';
-        position: absolute;
-        display: block;
-
-        height: 1px;
-        width: 0;
-
-        bottom: 15%;
-        left: 0;
-
-        background: var(--primary-green);
-        transition: all 500ms ease-in-out;
-    }
-
-    nav ul li a:hover:before {
-        width: 100%;
-    }
-
-    nav ul li a:hover {
-        background-position: 0;
-    }
-
-    #nav a {
+    #nav li {
         font-size: 1.5rem;
-    }
-
-    a {
-        font-family: 'Space Mono', monospace;
     }
 
     #links {
@@ -247,25 +199,34 @@
 <script>
     import {animate, cubicBezier} from "motion";
 
-    class CurvePathAnimator {
-        private readonly checkbox: HTMLInputElement | null;
-        private readonly curvePath: SVGPathElement | null;
-        private readonly navElement: HTMLElement | null;
-        private readonly navItems: NodeListOf<HTMLLIElement>;
+    class SiteNavigation extends HTMLElement {
+        private checkbox: HTMLInputElement | null = null;
+        private toggleBtn: HTMLLabelElement | null = null;
+        private curvePath: SVGPathElement | null = null;
+        private navElement: HTMLElement | null = null;
+        private navItems: NodeListOf<HTMLLIElement> | null = null;
 
         private readonly curveWidth: number = 300;
         private readonly initialOffset: number = -125;
         private readonly offsetStep: number = -20;
 
-        constructor() {
-            this.checkbox = document.getElementById('checkbox') as HTMLInputElement;
-            this.curvePath = document.querySelector('.curve-path') as SVGPathElement;
-            this.navElement = document.querySelector('nav');
-            this.navItems = document.querySelectorAll('#nav li');
+        connectedCallback() {
+            // Give Astro time to mount child components
+            setTimeout(() => {
+                this.checkbox = this.querySelector('.nav-checkbox') as HTMLInputElement;
+                this.toggleBtn = this.querySelector('.toggle') as HTMLLabelElement;
+                this.curvePath = this.querySelector('.curve-path') as SVGPathElement;
+                this.navElement = this.querySelector('nav');
+                this.navItems = this.querySelectorAll('#nav li');
 
-            if (this.checkbox && this.curvePath && this.navElement) {
-                this.init();
-            }
+                if (this.checkbox && this.curvePath && this.navElement && this.toggleBtn) {
+                    this.init();
+                }
+            }, 0);
+        }
+
+        disconnectedCallback() {
+            window.removeEventListener('resize', this.handleResize);
         }
 
         private getNavWidth(): number {
@@ -277,13 +238,34 @@
             this.renderPath(isOpened ? 1 : 0);
             this.renderNav(isOpened ? 1 : 0);
 
-            this.navItems.forEach((item, index) => {
+            this.navItems?.forEach((item, index) => {
                 const offset = this.initialOffset + (this.offsetStep * index);
                 const currentOffset = isOpened ? 0 : offset;
                 item.style.transform = `translateX(${currentOffset}px)`;
             });
 
-            this.checkbox?.addEventListener('change', () => this.toggleNav());
+            // We handle the click on the label/toggle manually to avoid ID references and `for=` attribute coupling
+            this.toggleBtn?.addEventListener('click', (e) => {
+                if (!this.checkbox) return;
+                this.checkbox.checked = !this.checkbox.checked;
+                // Add the class for the CSS animation logic to replace the `+` sibling selector
+                if (this.checkbox.checked) {
+                    this.toggleBtn?.classList.add('site-nav-open');
+                } else {
+                    this.toggleBtn?.classList.remove('site-nav-open');
+                }
+                this.toggleNav();
+            });
+
+            // Also listen to change in case it gets updated somehow
+            this.checkbox?.addEventListener('change', () => {
+                if (this.checkbox?.checked) {
+                    this.toggleBtn?.classList.add('site-nav-open');
+                } else {
+                    this.toggleBtn?.classList.remove('site-nav-open');
+                }
+                this.toggleNav();
+            });
 
             window.removeEventListener('resize', this.handleResize);
             window.addEventListener('resize', this.handleResize);
@@ -303,17 +285,13 @@
             const to = isOpening ? 1 : 0;
 
             animate(from, to, {
-                duration: 0.7,
-                ease: cubicBezier(0.33, 1, 0.68, 1),
-                onUpdate: (latest) => {
+                duration: 0.7, ease: cubicBezier(0.33, 1, 0.68, 1), onUpdate: (latest) => {
                     this.renderNav(latest);
                 }
             });
 
             animate(from, to, {
-                duration: 1,
-                ease: cubicBezier(0.25, 0.1, 0.25, 1.0),
-                onUpdate: (latest) => {
+                duration: 1, ease: cubicBezier(0.25, 0.1, 0.25, 1.0), onUpdate: (latest) => {
                     this.renderPath(latest);
                 }
             });
@@ -322,18 +300,17 @@
         }
 
         private animateNavItems(isOpening: boolean): void {
+            if (!this.navItems) return;
             const from = isOpening ? 0 : 1;
             const to = isOpening ? 1 : 0;
             const staggerDelay = 0.1;
 
             this.navItems.forEach((item, index) => {
+                // @ts-ignore
                 const delay = isOpening ? index * staggerDelay : (this.navItems.length - 1 - index) * staggerDelay;
 
                 animate(from, to, {
-                    duration: 1.1,
-                    delay: delay,
-                    ease: cubicBezier(0.34, 1.56, 0.64, 1),
-                    onUpdate: (latest) => {
+                    duration: 1.1, delay: delay, ease: cubicBezier(0.34, 1.56, 0.64, 1), onUpdate: (latest) => {
                         const offset = this.initialOffset + (this.offsetStep * index);
                         const currentOffset = offset * (1 - latest);
                         item.style.transform = `translateX(${currentOffset}px)`;
@@ -368,10 +345,7 @@
         }
     }
 
-    function setupNav() {
-        new CurvePathAnimator();
+    if (!customElements.get('site-navigation')) {
+        customElements.define('site-navigation', SiteNavigation);
     }
-
-    setupNav();
-    document.addEventListener('astro:page-load', setupNav);
 </script>

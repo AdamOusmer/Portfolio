@@ -1,0 +1,87 @@
+---
+interface Props {
+    pull?: number;
+    targetSelector?: string;
+    class?: string;
+}
+
+const { pull = 0.3, targetSelector, class: className } = Astro.props;
+---
+
+<magnetic-wrapper class={className} style="display: inline-block;">
+    <slot />
+</magnetic-wrapper>
+
+<script>
+    import { animate } from "motion";
+
+    class MagneticWrapper extends HTMLElement {
+        private _pull = 0.3;
+        private _targetSelector: string | undefined;
+        private _ctrl: AbortController | null = null;
+
+        static configure(el: MagneticWrapper, opts: { pull: number; targetSelector?: string }) {
+            el._pull = opts.pull;
+            el._targetSelector = opts.targetSelector;
+            setTimeout(() => el._attach(), 0);
+        }
+
+        connectedCallback() {
+            setTimeout(() => this._attach(), 0);
+        }
+
+        disconnectedCallback() {
+            this._ctrl?.abort();
+        }
+
+        private _attach() {
+            this._ctrl?.abort();
+            this._ctrl = new AbortController();
+            const { signal } = this._ctrl;
+            const pull = this._pull;
+            const targetSelector = this._targetSelector;
+
+            let target: HTMLElement = targetSelector
+                ? (this.querySelector(targetSelector) as HTMLElement)
+                : (this.firstElementChild as HTMLElement);
+            if (!target) target = this;
+
+            this.addEventListener(
+                "mousemove",
+                (e) => {
+                    const rect = this.getBoundingClientRect();
+                    const cx = e.clientX - rect.left - rect.width / 2;
+                    const cy = e.clientY - rect.top - rect.height / 2;
+                    animate(target, { x: cx * pull, y: cy * pull }, { duration: 0.1, ease: "linear" });
+                },
+                { signal }
+            );
+
+            this.addEventListener(
+                "mouseleave",
+                () => {
+                    animate(target, { x: 0, y: 0 }, { type: "spring", stiffness: 300, damping: 15, mass: 1 });
+                },
+                { signal }
+            );
+        }
+    }
+
+    if (!customElements.get("magnetic-wrapper")) {
+        customElements.define("magnetic-wrapper", MagneticWrapper);
+    }
+</script>
+
+<script define:vars={{ pull, targetSelector }}>
+    (function () {
+        const script = document.currentScript;
+        customElements.whenDefined("magnetic-wrapper").then(function () {
+            const el = script && script.previousElementSibling;
+            if (!el || el.tagName !== "MAGNETIC-WRAPPER") return;
+            const Ctor = customElements.get("magnetic-wrapper");
+            if (Ctor && typeof Ctor.configure === "function") {
+                Ctor.configure(el, { pull: pull, targetSelector: targetSelector });
+            }
+        });
+    })();
+</script>

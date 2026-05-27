@@ -1,0 +1,395 @@
+---
+interface Heading {
+    depth: number;
+    slug: string;
+    text: string;
+}
+
+interface Props {
+    headings: Heading[];
+}
+
+const { headings } = Astro.props;
+const items = headings.filter((h) => h.depth === 2);
+---
+
+{
+    items.length > 0 && (
+        <aside class="toc page-stagger" aria-label="Table of contents">
+            <table-of-contents>
+                <div class="toc-container">
+                    <label class="toc-summary">
+                        <span class="toc-label">Table of Contents</span>
+                        <input class="toc-checkbox" type="checkbox" aria-label="Toggle Table of Contents" />
+                        <span class="toc-chevron" aria-hidden="true">
+                            <svg
+                                width="14"
+                                height="14"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2.5"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <polyline points="6 9 12 15 18 9" />
+                            </svg>
+                        </span>
+                    </label>
+
+                    <div class="toc-wrapper">
+                        <svg class="toc-curve-svg" aria-hidden="true">
+                            <defs>
+                                <clipPath id="toc-clip">
+                                    <path class="toc-curve-path" d="" />
+                                </clipPath>
+                            </defs>
+                        </svg>
+
+                        <div class="toc-panel">
+                            <ul id="toc-list">
+                                {items.map((heading) => (
+                                    <li>
+                                        <a href={`#${heading.slug}`}>
+                                            <span class="toc-bullet" aria-hidden="true">
+                                                <svg
+                                                    width="12"
+                                                    height="12"
+                                                    viewBox="0 0 24 24"
+                                                    fill="none"
+                                                    stroke="currentColor"
+                                                    stroke-width="3"
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                >
+                                                    <polyline points="9 18 15 12 9 6" />
+                                                </svg>
+                                            </span>
+                                            <span class="toc-text">{heading.text}</span>
+                                        </a>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </table-of-contents>
+        </aside>
+    )
+}
+
+<style>
+    .toc {
+        max-width: 800px;
+        margin: 6rem auto 0;
+        padding: 0 2rem;
+    }
+
+    .toc-container {
+        background: rgba(17, 24, 39, 0.55);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        overflow: hidden;
+        isolation: isolate;
+    }
+
+    .toc-checkbox {
+        display: none;
+    }
+
+    .toc-summary {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem 1.5rem;
+        cursor: pointer;
+        position: relative;
+        z-index: 10;
+        user-select: none;
+    }
+
+    .toc-label {
+        font-family: "Space Mono", monospace;
+        color: var(--text-main);
+        font-size: 0.95rem;
+        margin: 0;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .toc-chevron {
+        color: var(--text-muted);
+        transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55), color 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .toc-wrapper {
+        height: 0;
+        position: relative;
+        overflow: visible;
+        will-change: height;
+    }
+
+    .toc-curve-svg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        overflow: visible;
+    }
+
+    .toc-curve-path {
+        fill: transparent;
+    }
+
+    .toc-panel {
+        height: 100%;
+        clip-path: url(#toc-clip);
+        -webkit-clip-path: url(#toc-clip);
+    }
+
+    #toc-list {
+        list-style: none;
+        margin: 0;
+        padding: 0.25rem 1.5rem 1rem 1.5rem;
+        color: var(--text-main);
+        font-family: "Space Mono", monospace;
+    }
+
+    #toc-list li {
+        margin: 0.25rem 0;
+        will-change: transform, opacity;
+    }
+
+    #toc-list li a {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        color: var(--text-main);
+        transition: color 0.3s ease;
+        position: relative;
+    }
+
+    #toc-list li a:hover {
+        color: var(--primary-green);
+    }
+
+    .toc-bullet {
+        color: var(--text-muted);
+        transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55), color 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #toc-list li a:hover .toc-bullet {
+        transform: translateX(4px);
+        color: var(--primary-green);
+    }
+
+    .toc-open .toc-chevron {
+        transform: rotate(-180deg);
+        color: var(--primary-green);
+    }
+</style>
+
+<script>
+    import { animate, cubicBezier } from "motion";
+    import { lenis } from "../scripts/scroll.js";
+
+    class TableOfContentsElement extends HTMLElement {
+        private checkbox: HTMLInputElement | null = null;
+        private toggleBtn: HTMLLabelElement | null = null;
+        private curvePath: SVGPathElement | null = null;
+        private wrapper: HTMLElement | null = null;
+        private panel: HTMLElement | null = null;
+        private tocItems: NodeListOf<HTMLLIElement> | null = null;
+
+        private readonly curveHeight: number = 50;
+        private readonly initialOffset: number = -25;
+        private readonly offsetStep: number = -8;
+
+        private fullHeight: number = 0;
+
+        connectedCallback() {
+            setTimeout(() => {
+                this.checkbox = this.querySelector(".toc-checkbox") as HTMLInputElement;
+                this.toggleBtn = this.querySelector(".toc-summary") as HTMLLabelElement;
+                this.curvePath = this.querySelector(".toc-curve-path") as SVGPathElement;
+                this.wrapper = this.querySelector(".toc-wrapper");
+                this.panel = this.querySelector(".toc-panel");
+                this.tocItems = this.querySelectorAll("#toc-list li");
+
+                if (this.checkbox && this.curvePath && this.wrapper && this.panel && this.toggleBtn) {
+                    this.init();
+                }
+            }, 0);
+        }
+
+        private measureFullHeight(): number {
+            if (!this.panel) return 0;
+            const list = this.panel.querySelector("ul");
+            return list ? (list as HTMLElement).offsetHeight : this.panel.offsetHeight;
+        }
+
+        private init(): void {
+            const isOpened = this.checkbox?.checked ?? false;
+            this.fullHeight = this.measureFullHeight();
+
+            this.renderPath(isOpened ? 1 : 0);
+            this.renderWrapper(isOpened ? 1 : 0);
+
+            this.tocItems?.forEach((item, index) => {
+                const offset = this.initialOffset + this.offsetStep * index;
+                const currentOffset = isOpened ? 0 : offset;
+                item.style.transform = `translateY(${currentOffset}px)`;
+                item.style.opacity = isOpened ? "1" : "0";
+            });
+
+            this.toggleBtn?.addEventListener("click", () => {
+                if (!this.checkbox) return;
+                this.checkbox.checked = !this.checkbox.checked;
+                if (this.checkbox.checked) {
+                    this.toggleBtn?.classList.add("toc-open");
+                } else {
+                    this.toggleBtn?.classList.remove("toc-open");
+                }
+                this.toggleToc();
+            });
+
+            this.checkbox?.addEventListener("change", () => {
+                if (this.checkbox?.checked) {
+                    this.toggleBtn?.classList.add("toc-open");
+                } else {
+                    this.toggleBtn?.classList.remove("toc-open");
+                }
+                this.toggleToc();
+            });
+
+            window.removeEventListener("resize", this.handleResize);
+            window.addEventListener("resize", this.handleResize);
+
+            this.bindLinks();
+        }
+
+        private handleResize = (): void => {
+            this.fullHeight = this.measureFullHeight();
+            if (this.checkbox) {
+                this.renderPath(this.checkbox.checked ? 1 : 0);
+                this.renderWrapper(this.checkbox.checked ? 1 : 0);
+            }
+        };
+
+        private toggleToc(): void {
+            if (!this.checkbox) return;
+            const isOpening = this.checkbox.checked;
+            this.fullHeight = this.measureFullHeight();
+
+            const from = isOpening ? 0 : 1;
+            const to = isOpening ? 1 : 0;
+
+            animate(from, to, {
+                duration: 0.7,
+                ease: cubicBezier(0.33, 1, 0.68, 1),
+                onUpdate: (latest) => {
+                    this.renderWrapper(latest);
+                },
+            });
+
+            animate(from, to, {
+                duration: 1,
+                ease: cubicBezier(0.25, 0.1, 0.25, 1.0),
+                onUpdate: (latest) => {
+                    this.renderPath(latest);
+                },
+            });
+
+            this.animateTocItems(isOpening);
+        }
+
+        private animateTocItems(isOpening: boolean): void {
+            if (!this.tocItems) return;
+            const from = isOpening ? 0 : 1;
+            const to = isOpening ? 1 : 0;
+            const staggerDelay = 0.07;
+
+            this.tocItems.forEach((item, index) => {
+                // @ts-ignore
+                const delay = isOpening
+                    ? index * staggerDelay
+                    : (this.tocItems.length - 1 - index) * staggerDelay;
+
+                animate(from, to, {
+                    duration: 0.9,
+                    delay,
+                    ease: cubicBezier(0.34, 1.56, 0.64, 1),
+                    onUpdate: (latest) => {
+                        const offset = this.initialOffset + this.offsetStep * index;
+                        const currentOffset = offset * (1 - latest);
+                        item.style.transform = `translateY(${currentOffset}px)`;
+                        item.style.opacity = String(latest);
+                    },
+                });
+            });
+        }
+
+        private renderWrapper(p: number): void {
+            if (!this.wrapper) return;
+            const innerH = this.fullHeight * p;
+            const curve = this.curveHeight * (1 - p) * p * 4;
+            this.wrapper.style.height = `${innerH + curve}px`;
+        }
+
+        private renderPath(p: number): void {
+            if (!this.curvePath || !this.panel) return;
+            const width = this.panel.offsetWidth || 800;
+            const innerH = this.fullHeight * p;
+            const curve = this.curveHeight * (1 - p) * p * 4;
+
+            const path = `
+                M 0 0
+                L ${width} 0
+                L ${width} ${innerH}
+                Q ${width / 2} ${innerH + curve}, 0 ${innerH}
+                Z
+            `.trim();
+
+            this.curvePath.setAttribute("d", path);
+        }
+
+        private bindLinks(): void {
+            const links = this.querySelectorAll<HTMLAnchorElement>("#toc-list a");
+            links.forEach((link) => {
+                link.addEventListener("click", (event) => {
+                    const hash = link.getAttribute("href");
+                    if (!hash || !hash.startsWith("#")) return;
+                    const target = document.querySelector(hash);
+                    if (!target) return;
+
+                    event.preventDefault();
+                    if (lenis && typeof lenis.scrollTo === "function") {
+                        lenis.scrollTo(target as HTMLElement, { offset: -40 });
+                    } else {
+                        (target as HTMLElement).scrollIntoView({ behavior: "smooth" });
+                    }
+
+                    if (this.checkbox?.checked) {
+                        this.checkbox.checked = false;
+                        this.toggleBtn?.classList.remove("toc-open");
+                        this.toggleToc();
+                    }
+                });
+            });
+        }
+    }
+
+    if (!customElements.get('table-of-contents')) {
+        customElements.define('table-of-contents', TableOfContentsElement);
+    }
+</script>

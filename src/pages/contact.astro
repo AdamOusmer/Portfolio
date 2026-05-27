@@ -1,12 +1,12 @@
 ---
 import Layout from '../layouts/layout.astro';
-import Nodes from '../components/layout/node.astro';
+import PageEntrance from '../components/ui/PageEntrance.astro';
+import RowLink from '../components/ui/RowLink.astro';
 ---
 
 <Layout title="Contact - Adam Ousmer" description="Reach out for internship opportunities, project collaborations, or a direct conversation.">
-    <Nodes />
-
-    <header>
+    <PageEntrance>
+        <header>
         <div class="parallax" style="--parallax-speed: 0.3">
             <div class="page-reveal">
                 <h1>Get in touch</h1>
@@ -18,33 +18,13 @@ import Nodes from '../components/layout/node.astro';
 
     <main>
         <nav>
-            <a class="page-slide" href="https://github.com/itsmavey" rel="noopener noreferrer" target="_blank">
-                <span>GitHub</span>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-                    <line x1="7" y1="17" x2="17" y2="7"></line>
-                    <polyline points="7 7 17 7 17 17"></polyline>
-                </svg>
-            </a>
-            <a class="page-slide" href="https://www.linkedin.com/in/adam-ousmer/" rel="noopener noreferrer" target="_blank">
-                <span>LinkedIn</span>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-                    <line x1="7" y1="17" x2="17" y2="7"></line>
-                    <polyline points="7 7 17 7 17 17"></polyline>
-                </svg>
-            </a>
-            <a class="page-slide" href="mailto:contact@adam-ousmer.dev">
-                <span>contact@adam-ousmer.dev</span>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-                    <line x1="7" y1="17" x2="17" y2="7"></line>
-                    <polyline points="7 7 17 7 17 17"></polyline>
-                </svg>
-            </a>
+            <RowLink href="https://github.com/adamousmer" label="GitHub" external class="page-slide" />
+            <RowLink href="https://www.linkedin.com/in/adam-ousmer/" label="LinkedIn" external class="page-slide" />
+            <RowLink href="mailto:contact@adam-ousmer.dev" label="contact@adam-ousmer.dev" class="page-slide" />
         </nav>
     </main>
+    </PageEntrance>
 </Layout>
-
-<script src="../scripts/page-entrance.js"></script>
-
 <style>
     header {
         position: relative;
@@ -90,61 +70,5 @@ import Nodes from '../components/layout/node.astro';
         display: flex;
         flex-direction: column;
         gap: 0;
-    }
-
-    nav > a {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        font-family: 'Space Grotesk', sans-serif;
-        font-size: 1.4rem;
-        color: var(--text-main);
-        padding: 1.5rem 0;
-        border-bottom: 1px solid var(--border-color);
-        transition: color 0.3s ease;
-        text-decoration: none;
-        position: relative;
-    }
-
-    nav > a::after {
-        content: '';
-        position: absolute;
-        bottom: -1px;
-        left: 0;
-        width: 0;
-        height: 1px;
-        background: var(--primary-green);
-        transition: width 0.4s ease;
-    }
-
-    nav > a:hover::after {
-        width: 100%;
-    }
-
-    nav > a:hover {
-        color: var(--primary-green);
-    }
-
-    nav > a:focus-visible {
-        outline: 2px solid var(--primary-green);
-        outline-offset: 3px;
-    }
-
-    nav > a > svg {
-        flex-shrink: 0;
-        opacity: 0;
-        transform: translateX(-5px);
-        transition: opacity 0.3s ease, transform 0.3s ease;
-    }
-
-    nav > a:hover > svg {
-        opacity: 1;
-        transform: translateX(0);
-    }
-
-    @media (max-width: 768px) {
-        nav > a {
-            font-size: 1.1rem;
-        }
     }
 </style>

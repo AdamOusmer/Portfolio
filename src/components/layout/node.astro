@@ -18,7 +18,16 @@ const {
 } = Astro.props;
 ---
 
-<canvas id="nodes" class="nodes-canvas" aria-hidden="true" role="presentation"></canvas>
+<canvas-background
+    data-node-count={nodeCount}
+    data-connect-distance={connectDistance}
+    data-node-speed={nodeSpeed}
+    data-return-speed={returnSpeed}
+    data-pointer-radius={pointerRadius}
+    data-repulsion-force={repulsionForce}
+    style="display: contents;">
+    <canvas id="nodes" class="nodes-canvas" aria-hidden="true" role="presentation"></canvas>
+</canvas-background>
 
 <style>
     .nodes-canvas {
@@ -34,11 +43,52 @@ const {
     }
 </style>
 
-<script define:vars={{nodeCount, connectDistance, nodeSpeed, returnSpeed, pointerRadius, repulsionForce}}>
-    let currentBackground = null;
+<script>
+    interface CanvasConfig {
+        nodeCount: number;
+        connectDistance: number;
+        nodeSpeed: number;
+        returnSpeed: number;
+        pointerRadius: number;
+        repulsionForce: number;
+    }
 
-    function initNodes() {
-        const CONNECT_DISTANCE_SQ = connectDistance * connectDistance;
+    const DEFAULT_CONFIG: CanvasConfig = {
+        nodeCount: 100,
+        connectDistance: 120,
+        nodeSpeed: 0.3,
+        returnSpeed: 0.02,
+        pointerRadius: 80,
+        repulsionForce: 0.2,
+    };
+
+    class CanvasBackground extends HTMLElement {
+        private _config: CanvasConfig = { ...DEFAULT_CONFIG };
+        private connection: any = null;
+
+        static configure(el: CanvasBackground, cfg: Partial<CanvasConfig>) {
+            Object.assign(el._config, DEFAULT_CONFIG, cfg);
+        }
+
+        connectedCallback() {
+            setTimeout(() => {
+                const canvas = this.querySelector('canvas') as HTMLCanvasElement;
+                if (!canvas) return;
+
+                if (!this.connection) {
+                    this.connection = new Connection(canvas, this._config);
+                    this.connection.start();
+                }
+            }, 0);
+        }
+
+        disconnectedCallback() {
+            if (this.connection) {
+                this.connection.destroy();
+                this.connection = null;
+            }
+        }
+    }
 
         const mouse = {
             x: null, y: null, isActive: false
@@ -148,17 +198,18 @@ const {
         }
 
         class Node {
-            constructor(canvas, x, y, color, id) {
+            constructor(canvas, x, y, color, id, config) {
                 this.canvas = canvas;
                 this.x = x;
                 this.y = y;
-                this.vx = (Math.random() - 0.5) * nodeSpeed;
-                this.vy = (Math.random() - 0.5) * nodeSpeed;
+                this.vx = (Math.random() - 0.5) * config.nodeSpeed;
+                this.vy = (Math.random() - 0.5) * config.nodeSpeed;
                 this.baseVx = this.vx;
                 this.baseVy = this.vy;
                 this.color = color;
                 this.radius = Math.random() * 3 + 3;
                 this.id = id;
+                this.config = config;
             }
 
             update() {
@@ -166,11 +217,11 @@ const {
                     const dx = this.x - mouse.x;
                     const dy = this.y - mouse.y;
                     const distSq = dx * dx + dy * dy;
-                    const pointerRadiusSq = pointerRadius * pointerRadius;
+                    const pointerRadiusSq = this.config.pointerRadius * this.config.pointerRadius;
 
                     if (distSq < pointerRadiusSq && distSq > 0) {
                         const dist = Math.sqrt(distSq);
-                        const force = (1 - dist / pointerRadius) * repulsionForce;
+                        const force = (1 - dist / this.config.pointerRadius) * this.config.repulsionForce;
 
                         const nx = dx / dist;
                         const ny = dy / dist;
@@ -178,12 +229,12 @@ const {
                         this.vx += nx * force;
                         this.vy += ny * force;
                     } else {
-                        this.vx += (this.baseVx - this.vx) * returnSpeed;
-                        this.vy += (this.baseVy - this.vy) * returnSpeed;
+                        this.vx += (this.baseVx - this.vx) * this.config.returnSpeed;
+                        this.vy += (this.baseVy - this.vy) * this.config.returnSpeed;
                     }
-                } else { // Needed for when the mouse leaves the canvas or stops moving
-                    this.vx += (this.baseVx - this.vx) * returnSpeed;
-                    this.vy += (this.baseVy - this.vy) * returnSpeed;
+                } else {
+                    this.vx += (this.baseVx - this.vx) * this.config.returnSpeed;
+                    this.vy += (this.baseVy - this.vy) * this.config.returnSpeed;
                 }
 
                 this.x += this.vx;
@@ -210,17 +261,40 @@ const {
         }
 
         class Connection {
-            constructor(canvas) {
+            private canvas: HTMLCanvasElement;
+            private config: CanvasConfig;
+            private ctx: CanvasRenderingContext2D;
+            private width: number;
+            private height: number;
+            private nodes: Node[];
+            private qTree: QuadTree;
+            private animationId: number | null;
+            private lastTime: number;
+            private observer: IntersectionObserver | null;
+            private isVisible: boolean;
+            private queryResults: Node[];
+            private searchRange: Rectangle;
+            private nodeColor: string;
+            private targetFPS: number;
+            private frameInterval: number;
+            private connectDistanceSq: number;
+            private abortController: AbortController;
+
+            constructor(canvas: HTMLCanvasElement, config: CanvasConfig) {
                 this.canvas = canvas;
+                this.config = config;
                 this.ctx = canvas.getContext('2d', {
                     desynchronized: true
-                });
+                }) as CanvasRenderingContext2D;
+                this.width = window.innerWidth;
+                this.height = window.innerHeight;
                 this.nodes = [];
                 this.animationId = null;
                 this.observer = null;
                 this.isVisible = true;
                 this.queryResults = [];
-                this.searchRange = new Rectangle(0, 0, connectDistance, connectDistance);
+                this.connectDistanceSq = config.connectDistance * config.connectDistance;
+                this.searchRange = new Rectangle(0, 0, config.connectDistance, config.connectDistance);
 
                 const boundary = new Rectangle(0, 0, 0, 0);
                 this.qTree = new QuadTree(boundary, 4);
@@ -231,6 +305,7 @@ const {
                 this.lastTime = performance.now();
                 this.targetFPS = 60;
                 this.frameInterval = 1000 / this.targetFPS;
+                this.abortController = new AbortController();
 
                 this.init();
             }
@@ -262,7 +337,7 @@ const {
                 const referenceArea = 1512 * 862;
                 const currentArea = this.width * this.height;
                 const scale = currentArea / referenceArea;
-                return Math.max(20, Math.round(nodeCount * scale));
+                return Math.max(20, Math.round(this.config.nodeCount * scale));
             }
 
             createNodes() {
@@ -273,7 +348,7 @@ const {
                 for (let i = 0; i < count; i++) {
                     const x = Math.random() * this.width;
                     const y = Math.random() * this.height;
-                    this.nodes[i] = new Node({width: this.width, height: this.height}, x, y, this.nodeColor, i);
+                    this.nodes[i] = new Node({width: this.width, height: this.height}, x, y, this.nodeColor, i, this.config);
                 }
             }
 
@@ -287,7 +362,7 @@ const {
                     for (let i = current; i < target; i++) {
                         const x = Math.random() * this.width;
                         const y = Math.random() * this.height;
-                        this.nodes.push(new Node({width: this.width, height: this.height}, x, y, this.nodeColor, i));
+                        this.nodes.push(new Node({width: this.width, height: this.height}, x, y, this.nodeColor, i, this.config));
                     }
                 } else {
                     this.nodes.length = target;
@@ -315,9 +390,9 @@ const {
                         const dy = node.y - other.y;
                         const distSq = dx * dx + dy * dy;
 
-                        if (distSq < CONNECT_DISTANCE_SQ) {
+                        if (distSq < this.connectDistanceSq) {
                             const distance = Math.sqrt(distSq);
-                            const opacity = 1 - distance / connectDistance;
+                            const opacity = 1 - distance / this.config.connectDistance;
 
                             this.ctx.beginPath();
                             this.ctx.strokeStyle = `rgba(156, 163, 175, ${opacity})`;
@@ -391,7 +466,7 @@ const {
                         this.isVisible = true;
                         this.start();
                     }
-                });
+                }, { signal: this.abortController.signal });
             }
 
             setupResizeHandler() {
@@ -406,12 +481,13 @@ const {
                         }
                         this.adjustNodeCount();
                     }, 150);
-                });
+                }, { signal: this.abortController.signal });
             }
 
             destroy() {
                 this.stop();
                 if (this.observer) this.observer.disconnect();
+                this.abortController.abort();
             }
 
             setupMouseHandlers() {
@@ -420,6 +496,7 @@ const {
                 }
 
                 let mouseTimeout;
+                const { signal } = this.abortController;
 
                 window.addEventListener('mousemove', (event) => {
                     const rect = this.canvas.getBoundingClientRect();
@@ -431,31 +508,31 @@ const {
                     mouseTimeout = setTimeout(() => {
                         mouse.isActive = false;
                     }, 100);
-                });
+                }, { signal });
 
                 document.addEventListener('mouseleave', () => {
                     mouse.isActive = false;
                     clearTimeout(mouseTimeout);
-                });
+                }, { signal });
             }
         }
 
-        const canvas = document.getElementById('nodes');
-        if (canvas) {
-            if (currentBackground) {
-                currentBackground.destroy();
-            }
 
-            currentBackground = new Connection(canvas);
-        }
+    if (!customElements.get('canvas-background')) {
+        customElements.define('canvas-background', CanvasBackground);
     }
+</script>
 
-    document.addEventListener('astro:page-load', initNodes);
-
-    document.addEventListener('astro:before-preparation', () => {
-        if (currentBackground) {
-            currentBackground.destroy();
-            currentBackground = null;
-        }
-    });
+<script define:vars={{ nodeCount, connectDistance, nodeSpeed, returnSpeed, pointerRadius, repulsionForce }}>
+    (function () {
+        const script = document.currentScript;
+        customElements.whenDefined("canvas-background").then(function () {
+            const el = script && script.previousElementSibling;
+            if (!el || el.tagName !== "CANVAS-BACKGROUND") return;
+            const Ctor = customElements.get("canvas-background");
+            if (Ctor && typeof Ctor.configure === "function") {
+                Ctor.configure(el, { nodeCount: nodeCount, connectDistance: connectDistance, nodeSpeed: nodeSpeed, returnSpeed: returnSpeed, pointerRadius: pointerRadius, repulsionForce: repulsionForce });
+            }
+        });
+    })();
 </script>

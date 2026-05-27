@@ -1,8 +1,10 @@
 ---
 import Layout from "./layout.astro";
-import Nodes from "../components/layout/node.astro";
+import TableOfContents from "../components/TableOfContents.astro";
+import BackToTop from "../components/ui/BackToTop.astro";
+import PageEntrance from "../components/ui/PageEntrance.astro";
 
-const { frontmatter } = Astro.props;
+const { frontmatter, headings = [] } = Astro.props;
 const { title, description, pubDate, heroImage } = frontmatter;
 
 const dateFormatted = new Date(pubDate).toLocaleDateString("en-US", {
@@ -10,6 +12,29 @@ const dateFormatted = new Date(pubDate).toLocaleDateString("en-US", {
     month: "long",
     day: "numeric",
 });
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+
+const blogPostingSchema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": title,
+    "description": description,
+    "datePublished": new Date(pubDate).toISOString(),
+    "author": { "@type": "Person", "name": "Adam Ousmer", "url": "https://adam-ousmer.dev" },
+    ...(heroImage ? { "image": new URL(heroImage, Astro.site).toString() } : {}),
+    "mainEntityOfPage": canonicalURL.toString(),
+};
+
+const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://adam-ousmer.dev" },
+        { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://adam-ousmer.dev/blog" },
+        { "@type": "ListItem", "position": 3, "name": title },
+    ],
+};
 ---
 
 <Layout
@@ -17,17 +42,20 @@ const dateFormatted = new Date(pubDate).toLocaleDateString("en-US", {
     description={description}
     image={heroImage}
 >
-    <div class="fixed-background">
-        <Nodes />
-    </div>
+    <script type="application/ld+json" set:html={JSON.stringify(blogPostingSchema)} slot="head" />
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} slot="head" />
 
-    <article>
+    <PageEntrance>
+        <article>
         <div class="hero-banner-container">
             {
                 heroImage && (
-                    <div
+                    <img
+                        src={heroImage}
+                        alt={title}
                         class="banner-image"
-                        style={`background-image: url('${heroImage}')`}
+                        loading="lazy"
+                        decoding="async"
                     />
                 )
             }
@@ -43,27 +71,20 @@ const dateFormatted = new Date(pubDate).toLocaleDateString("en-US", {
             </div>
         </div>
 
+        <TableOfContents headings={headings} />
+
         <main class="prose">
             <slot />
         </main>
-    </article>
+        </article>
+    </PageEntrance>
+
+    <BackToTop />
 </Layout>
 
 <script src="../scripts/copy-code.js"></script>
-<script src="../scripts/page-entrance.js"></script>
 
 <style>
-    .fixed-background {
-        position: fixed;
-        top: -10vh;
-        left: -10vw;
-        width: 120vw;
-        height: 120vh;
-        z-index: -10;
-        pointer-events: none;
-        will-change: transform;
-    }
-
     .hero-banner-container {
         position: relative;
         width: 100%;
@@ -81,9 +102,8 @@ const dateFormatted = new Date(pubDate).toLocaleDateString("en-US", {
         left: 0;
         width: 100%;
         height: 140%;
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
+        object-fit: cover;
+        object-position: center;
         z-index: 1;
         will-change: transform;
     }
@@ -115,8 +135,6 @@ const dateFormatted = new Date(pubDate).toLocaleDateString("en-US", {
     .date {
         font-family: "Space Mono", monospace;
         color: var(--primary-green);
-        text-transform: uppercase;
-        letter-spacing: 2px;
         font-size: 0.9rem;
         margin-bottom: 1rem;
     }

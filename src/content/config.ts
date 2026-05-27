@@ -20,6 +20,7 @@ const projectsCollection = defineCollection({
         githubUrl: z.string().url().optional(),
         websiteUrl: z.string().url().optional(),
         blogSlug: z.string().optional(),
+        docsSlug: z.string().optional(),
         featured: z.boolean().default(false),
     }),
 });

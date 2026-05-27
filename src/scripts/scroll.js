@@ -1,18 +1,11 @@
 import Lenis from 'lenis';
+import { applyParallax } from './parallax.js';
 
-const lenis = new Lenis({
-    lerp: 0.1,           // replaces duration + easing (0–1, lower = smoother)
-    smoothWheel: true,   // replaces smooth
-    syncTouch: false,    // replaces smoothTouch
+export const lenis = new Lenis({
+    lerp: 0.1,
+    smoothWheel: true,
+    syncTouch: false,
 });
-
-function applyParallax() {
-    const scrollY = window.scrollY;
-    document.querySelectorAll('.parallax').forEach((el) => {
-        const speed = parseFloat(getComputedStyle(el).getPropertyValue('--parallax-speed'));
-        el.style.transform = `translateY(${scrollY * speed}px)`;
-    });
-}
 
 function raf(time) {
     lenis.raf(time);

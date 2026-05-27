@@ -2,7 +2,7 @@
  * Adds a "Copy" button to every <pre> code block inside .prose containers.
  */
 document.addEventListener("DOMContentLoaded", () => {
-    const codeBlocks = document.querySelectorAll(".prose pre");
+    const codeBlocks = document.querySelectorAll(".prose pre, .sl-markdown-content pre");
 
     codeBlocks.forEach((pre) => {
         // Wrap in a container for positioning

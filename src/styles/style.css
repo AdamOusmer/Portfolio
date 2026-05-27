@@ -21,12 +21,19 @@
 a {
     text-decoration: none;
     color: inherit;
+    cursor: pointer;
 }
 
 button {
     cursor: pointer;
     border: none;
     background: none;
+}
+
+label[for],
+summary,
+[role="button"] {
+    cursor: pointer;
 }
 
 ul {

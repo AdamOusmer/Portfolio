@@ -744,7 +744,7 @@ the users to read fast and reduces errors. This font fulfills are goal to reduce
 </style>
 
 <div class="video-wrapper">
-  <video class="prototype-video" autoplay loop muted playsinline>
+  <video transition:persist class="prototype-video" autoplay loop muted playsinline>
     <source src="/soen357MiniProject/showcase.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
