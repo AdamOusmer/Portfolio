@@ -1,18 +1,22 @@
 ---
+import { setPageLocale } from '../i18n/setLocale';
+setPageLocale(Astro);
+
 import Layout from '../layouts/layout.astro';
 import PageEntrance from '../components/ui/PageEntrance.astro';
 import RowLink from '../components/ui/RowLink.astro';
+import { m } from '../paraglide/messages.js';
 ---
 
-<Layout title="Contact - Adam Ousmer" description="Reach out for internship opportunities, project collaborations, or a direct conversation.">
+<Layout title={m.contact_meta_title()} description={m.contact_meta_description()}>
     <PageEntrance>
         <header>
         <div class="parallax" style="--parallax-speed: 0.3">
             <div class="page-reveal">
-                <h1>Get in touch</h1>
+                <h1>{m.contact_title()}</h1>
                 <span class="page-title-line"></span>
             </div>
-            <p class="page-stagger">I am open to internship opportunities, project collaborations, and direct messages.</p>
+            <p class="page-stagger">{m.contact_intro()}</p>
         </div>
     </header>
 

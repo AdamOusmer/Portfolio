@@ -4,5 +4,12 @@
     "description": "Explores the design and implementation of data-intensive systems, covering relational database design (SQL), NoSQL solutions, data modeling, and transaction management.",
     "relevance": "Directly supported the backend infrastructure of ItsBagelBot by providing a rigorous framework for managing persistent state and data consistency.",
     "year": 2025,
-    "semester": "winter"
+    "semester": "winter",
+    "translations": {
+        "fr": {
+            "name": "Systèmes de données pour ingénieurs logiciels",
+            "description": "Explore la conception et l'implémentation de systèmes à forte intensité de données, couvrant la conception de bases de données relationnelles (SQL), les solutions NoSQL, la modélisation de données et la gestion des transactions.",
+            "relevance": "A directement soutenu l'infrastructure backend d'ItsBagelBot en fournissant un cadre rigoureux pour la gestion de l'état persistant et de la cohérence des données."
+        }
+    }
 }

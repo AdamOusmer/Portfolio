@@ -10,6 +10,11 @@
     "Lazy Loading",
     "CLI"
   ],
-  "githubUrl": "https://github.com/itsmavey/ThrustOptima",
-  "featured": true
+  "githubUrl": "https://github.com/AdamOusmer/ThrustOptima",
+  "featured": true,
+  "translations": {
+    "fr": {
+      "description": "ThrustOptima est un outil logiciel spécialisé conçu pour analyser les tomographies de moteurs-fusées. Il a été développé pour aider Space Concordia — Division Rocketry à évaluer l'intégrité structurelle de pièces issues de la fabrication additive dans un contexte d'évaluation non destructive."
+    }
+  }
 }

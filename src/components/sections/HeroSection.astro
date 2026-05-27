@@ -2,6 +2,8 @@
 import Button from '../ui/buttons/Button.astro';
 import Magnetic from '../ui/Magnetic.astro';
 import PageEntrance from '../ui/PageEntrance.astro';
+import { m } from '../../paraglide/messages.js';
+import { localizeHref } from '../../paraglide/runtime.js';
 ---
 
 <PageEntrance>
@@ -11,22 +13,19 @@ import PageEntrance from '../ui/PageEntrance.astro';
                 <h1>Adam Ousmer</h1>
                 <span class="page-title-line"></span>
             </div>
-            <h2 class="page-stagger">Software Engineering Student at Concordia University</h2>
+            <h2 class="page-stagger">{m.hero_subtitle()}</h2>
 
-        <p class="page-stagger">
-            I build things for the web and study how software systems work end to end.
-            Currently focused on full-stack development, infrastructure, and interface design.
-        </p>
+        <p class="page-stagger">{m.hero_intro()}</p>
 
             <div class="hero-buttons page-stagger">
-                <Button href="/contact" text="Get in touch" variant="primary" width="170px" height="45px" />
-                <Button href="/#projects" text="Projects" variant="secondary" width="170px" height="45px" />
+                <Button href={localizeHref('/contact')} text={m.hero_cta_contact()} variant="primary" width="170px" height="45px" />
+                <Button href={localizeHref('/#projects')} text={m.hero_cta_projects()} variant="secondary" width="170px" height="45px" />
             </div>
 
             <Magnetic pull={0.1}>
-                <a href="#skills" class="scroll-indicator page-stagger" aria-label="Scroll to Skills Section">
+                <a href="#skills" class="scroll-indicator page-stagger" aria-label={m.hero_scroll_aria()}>
                     <div class="mouse"></div>
-                    <p>Scroll</p>
+                    <p>{m.hero_scroll_label()}</p>
                 </a>
             </Magnetic>
         </div>

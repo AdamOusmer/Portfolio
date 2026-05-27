@@ -1,0 +1,14 @@
+{
+  "order": 1,
+  "year": "January, 2022",
+  "title": "Built my first AI project",
+  "description": "Pre-dating the generative AI boom, I developed an AI program from scratch without external libraries just 3 months into my coding journey. Explored core neural network concepts by performing all calculus derivations and integrations by hand.",
+  "type": "project",
+  "translations": {
+    "fr": {
+      "year": "Janvier 2022",
+      "title": "Mon premier projet d'IA",
+      "description": "Avant l'essor de l'IA générative, j'ai développé un programme d'IA à partir de zéro, sans bibliothèques externes, après seulement trois mois d'apprentissage en programmation. J'ai exploré les concepts fondamentaux des réseaux de neurones en effectuant à la main toutes les dérivations et intégrations en calcul différentiel."
+    }
+  }
+}

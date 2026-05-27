@@ -9,6 +9,11 @@
     "Object-Oriented Design",
     "Framework Development"
   ],
-  "githubUrl": "https://github.com/itsmavey/GUIToolkit",
-  "featured": false
+  "githubUrl": "https://github.com/AdamOusmer/GUIToolkit",
+  "featured": false,
+  "translations": {
+    "fr": {
+      "description": "Conception d'un toolkit GUI en Java pour Orisis Studio. Construite et publiée avec Maven, la bibliothèque offre une architecture modulaire pour gérer les éléments interactifs, les multi-panneaux, les boutons personnalisés et les listeners globaux dans les plugins."
+    }
+  }
 }

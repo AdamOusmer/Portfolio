@@ -9,6 +9,7 @@ import Footer from "../components/layout/Footer.astro";
 import Nodes from "../components/layout/node.astro";
 
 import { ClientRouter } from "astro:transitions";
+import { getRelativeLocaleUrl } from "astro:i18n";
 import "../styles/style.css";
 
 import "@fontsource/space-grotesk/400.css";
@@ -16,24 +17,40 @@ import "@fontsource/space-grotesk/700.css";
 import "@fontsource/space-mono/400.css";
 import "@fontsource/space-mono/700.css";
 
+import { asLocale, LOCALES, HREFLANG, HTML_LANG, OG_LOCALE, DEFAULT_LOCALE } from "../i18n/config";
+import { m } from "../paraglide/messages.js";
+
 interface Props {
     title: string;
     description?: string;
     image?: string;
 }
 
+const currentLocale = asLocale(Astro.currentLocale);
+
 const {
     title,
-    description = "Software Engineering Student at Concordia University.",
+    description = m.site_description_default(),
     image = "/og-image.png",
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const isHomepage = Astro.url.pathname === '/';
+const isHomepage = Astro.url.pathname === '/' || Astro.url.pathname === `/${currentLocale}/`;
+
+// Build the path WITHOUT any locale prefix, so we can re-emit it for every locale.
+function stripLocalePrefix(pathname: string): string {
+    for (const loc of LOCALES) {
+        if (loc === DEFAULT_LOCALE) continue;
+        if (pathname === `/${loc}` || pathname === `/${loc}/`) return '/';
+        if (pathname.startsWith(`/${loc}/`)) return pathname.slice(`/${loc}`.length);
+    }
+    return pathname;
+}
+const basePath = stripLocalePrefix(Astro.url.pathname);
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang={HTML_LANG[currentLocale]}>
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -60,6 +77,20 @@ const isHomepage = Astro.url.pathname === '/';
         <link rel="canonical" href={canonicalURL} />
         <link rel="sitemap" href="/sitemap-index.xml" />
 
+        <!-- hreflang alternates -->
+        {LOCALES.map((loc) => (
+            <link
+                rel="alternate"
+                hreflang={HREFLANG[loc]}
+                href={new URL(getRelativeLocaleUrl(loc, basePath), Astro.site)}
+            />
+        ))}
+        <link
+            rel="alternate"
+            hreflang="x-default"
+            href={new URL(getRelativeLocaleUrl(DEFAULT_LOCALE, basePath), Astro.site)}
+        />
+
         <!-- Open Graph / Facebook -->
 
         <meta property="og:type" content="website" />
@@ -68,7 +99,10 @@ const isHomepage = Astro.url.pathname === '/';
         <meta property="og:description" content={description} />
         <meta property="og:image" content={new URL(image, Astro.url)} />
         <meta property="og:site_name" content="Adam Ousmer's Portfolio" />
-        <meta property="og:locale" content="en_US" />
+        <meta property="og:locale" content={OG_LOCALE[currentLocale]} />
+        {LOCALES.filter((loc) => loc !== currentLocale).map((loc) => (
+            <meta property="og:locale:alternate" content={OG_LOCALE[loc]} />
+        ))}
 
         <!-- Twitter -->
 
@@ -87,7 +121,7 @@ const isHomepage = Astro.url.pathname === '/';
                 "name": "Adam Ousmer",
                 "url": "https://adam-ousmer.dev",
                 "sameAs": [
-                    "https://github.com/itsmavey"
+                    "https://github.com/AdamOusmer"
                 ],
                 "jobTitle": "Software Engineering Student",
                 "alumniOf": {

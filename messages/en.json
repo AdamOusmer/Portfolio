@@ -1,0 +1,70 @@
+{
+  "$schema": "https://inlang.com/schema/inlang-message-format",
+
+  "site_description_default": "Software Engineering Student at Concordia University.",
+
+  "nav_aria_toggle": "Toggle navigation",
+  "nav_label": "Navigation",
+  "nav_link_home": "Home",
+  "nav_link_projects": "Projects",
+  "nav_link_blog": "Blog",
+  "nav_link_contact": "Contact",
+  "nav_link_github": "Github",
+  "nav_link_linkedin": "LinkedIn",
+  "nav_language_switch": "Français",
+  "nav_language_switch_aria": "Switch to French",
+
+  "footer_role": "Software Engineering Student",
+  "footer_aria_github": "GitHub",
+  "footer_aria_linkedin": "LinkedIn",
+  "footer_aria_email": "Email",
+  "footer_copyright": "© {year} Adam Ousmer. All rights reserved.",
+
+  "hero_subtitle": "Software Engineering Student at Concordia University",
+  "hero_intro": "I build things for the web and study how software systems work end to end. Currently focused on full-stack development, infrastructure, and interface design.",
+  "hero_cta_contact": "Get in touch",
+  "hero_cta_projects": "Projects",
+  "hero_scroll_label": "Scroll",
+  "hero_scroll_aria": "Scroll to Skills Section",
+
+  "home_meta_title": "Adam Ousmer - Software Engineering Student",
+
+  "section_skills_title": "Technical Skills",
+  "skills_category_languages": "Languages",
+  "skills_category_frameworks": "Frameworks",
+  "skills_category_infrastructure": "Infrastructure & Tools",
+
+  "section_timeline_title": "Journey",
+  "timeline_ongoing_badge": "In Progress",
+
+  "section_projects_title": "Projects",
+  "project_btn_docs": "Docs",
+  "project_btn_learn_more": "Learn more",
+  "project_aria_website": "Visit website",
+  "project_aria_github": "View on GitHub",
+
+  "section_courses_title": "Courses",
+  "section_courses_subtitle": "Relevant coursework from my Software Engineering program.",
+  "semester_fall": "Fall",
+  "semester_winter": "Winter",
+  "semester_summer": "Summer",
+
+  "blog_meta_title": "Blog - Adam Ousmer",
+  "blog_meta_description": "Project writeups, process breakdowns, and technical deep dives.",
+  "blog_header_title": "My Blog",
+  "blog_header_subtitle": "Projects, Processes and deep dives.",
+  "blog_read_more": "Read Article",
+
+  "contact_meta_title": "Contact - Adam Ousmer",
+  "contact_meta_description": "Reach out for internship opportunities, project collaborations, or a direct conversation.",
+  "contact_title": "Get in touch",
+  "contact_intro": "I am open to internship opportunities, project collaborations, and direct messages.",
+
+  "error_404_meta_title": "404 - Page Not Found",
+  "error_404_meta_description": "The page you are looking for does not exist.",
+  "error_404_message": "The page you're looking for doesn't exist or has been moved.",
+  "error_500_meta_title": "500 - Server Error",
+  "error_500_meta_description": "An unexpected error occurred on our end.",
+  "error_500_message": "Something went wrong on our end. Please try again later.",
+  "error_return_home": "Return to Home"
+}

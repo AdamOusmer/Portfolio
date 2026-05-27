@@ -2,6 +2,7 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import mermaid from 'astro-mermaid';
+import { paraglideVitePlugin } from '@inlang/paraglide-js';
 
 
 // https://astro.build/config
@@ -10,6 +11,34 @@ export default defineConfig({
     prefetch:  true,
 
     compressHTML: true,
+
+    i18n: {
+        locales: ['en', 'fr'],
+        defaultLocale: 'en',
+        routing: {
+            prefixDefaultLocale: false,
+            redirectToDefaultLocale: false,
+        },
+    },
+
+    vite: {
+        plugins: [
+            paraglideVitePlugin({
+                project: './project.inlang',
+                outdir: './src/paraglide',
+                strategy: ['url', 'cookie', 'preferredLanguage', 'baseLocale'],
+                urlPatterns: [
+                    {
+                        pattern: '/:path(.*)?',
+                        localized: [
+                            ['fr', '/fr/:path(.*)?'],
+                            ['en', '/:path(.*)?'],
+                        ],
+                    },
+                ],
+            }),
+        ],
+    },
 
 
 
@@ -54,7 +83,15 @@ export default defineConfig({
             },
         }),
 
-        sitemap(),
+        sitemap({
+            i18n: {
+                defaultLocale: 'en',
+                locales: {
+                    en: 'en-US',
+                    fr: 'fr-CA',
+                },
+            },
+        }),
     ],
 
     server: {

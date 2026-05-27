@@ -22,6 +22,12 @@ const projectsCollection = defineCollection({
         blogSlug: z.string().optional(),
         docsSlug: z.string().optional(),
         featured: z.boolean().default(false),
+        translations: z.object({
+            fr: z.object({
+                title: z.string().optional(),
+                description: z.string().optional(),
+            }).optional(),
+        }).optional(),
     }),
 });
 
@@ -34,6 +40,32 @@ const coursesCollection = defineCollection({
         relevance: z.string(),
         year: z.number(),
         semester: z.enum(['fall', 'winter', 'summer']),
+        translations: z.object({
+            fr: z.object({
+                name: z.string().optional(),
+                description: z.string().optional(),
+                relevance: z.string().optional(),
+            }).optional(),
+        }).optional(),
+    }),
+});
+
+const timelineCollection = defineCollection({
+    type: 'data',
+    schema: z.object({
+        order: z.number(),
+        year: z.string(),
+        title: z.string(),
+        description: z.string(),
+        type: z.enum(['education', 'project', 'career']),
+        ongoing: z.boolean().default(false),
+        translations: z.object({
+            fr: z.object({
+                year: z.string().optional(),
+                title: z.string().optional(),
+                description: z.string().optional(),
+            }).optional(),
+        }).optional(),
     }),
 });
 
@@ -41,4 +73,5 @@ export const collections = {
     'blog': blogCollection,
     'projects': projectsCollection,
     'courses': coursesCollection,
+    'timeline': timelineCollection,
 };

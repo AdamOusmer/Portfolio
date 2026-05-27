@@ -2,6 +2,8 @@
 import Layout from './layout.astro';
 import Button from '../components/ui/buttons/Button.astro';
 import PageEntrance from '../components/ui/PageEntrance.astro';
+import { m } from '../paraglide/messages.js';
+import { localizeHref } from '../paraglide/runtime.js';
 
 interface Props {
     title: string;
@@ -26,7 +28,7 @@ const { title, description, errorCode, errorMessage } = Astro.props;
     </header>
 
     <main class="error-main page-stagger">
-        <Button href="/" text="Return to Home" variant="primary" />
+        <Button href={localizeHref('/')} text={m.error_return_home()} variant="primary" />
     </main>
     </PageEntrance>
 </Layout>

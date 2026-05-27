@@ -1,0 +1,14 @@
+{
+  "order": 2,
+  "year": "September, 2022",
+  "title": "Started Software Engineering at Concordia University",
+  "description": "Enrolled in the Bachelor of Engineering in Software Engineering program.",
+  "type": "education",
+  "translations": {
+    "fr": {
+      "year": "Septembre 2022",
+      "title": "Début du baccalauréat en génie logiciel à l'Université Concordia",
+      "description": "Admission au programme de Bachelor of Engineering in Software Engineering."
+    }
+  }
+}

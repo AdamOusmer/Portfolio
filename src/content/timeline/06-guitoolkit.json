@@ -1,0 +1,14 @@
+{
+  "order": 6,
+  "year": "July, 2025",
+  "title": "Development of GUIToolkit",
+  "description": "Built a GUI framework for Minecraft plugins with Orisis Studio.",
+  "type": "project",
+  "translations": {
+    "fr": {
+      "year": "Juillet 2025",
+      "title": "Développement de GUIToolkit",
+      "description": "Conception d'un framework GUI pour des plugins Minecraft avec Orisis Studio."
+    }
+  }
+}

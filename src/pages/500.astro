@@ -1,10 +1,14 @@
 ---
+import { setPageLocale } from '../i18n/setLocale';
+setPageLocale(Astro);
+
 import ErrorLayout from '../layouts/ErrorLayout.astro';
+import { m } from '../paraglide/messages.js';
 ---
 
-<ErrorLayout 
-    title="500 - Server Error"
-    description="An unexpected error occurred on our end."
+<ErrorLayout
+    title={m.error_500_meta_title()}
+    description={m.error_500_meta_description()}
     errorCode="500"
-    errorMessage="Something went wrong on our end. Please try again later."
+    errorMessage={m.error_500_message()}
 />

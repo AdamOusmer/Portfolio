@@ -1,0 +1,15 @@
+{
+  "order": 7,
+  "year": "October, 2025",
+  "title": "Development of ItsBagelBot",
+  "description": "Building a microservice architecture for a Twitch bot with zero-trust security, k3s and Oracle Cloud.",
+  "type": "project",
+  "ongoing": true,
+  "translations": {
+    "fr": {
+      "year": "Octobre 2025",
+      "title": "Développement d'ItsBagelBot",
+      "description": "Construction d'une architecture microservices pour un bot Twitch avec une sécurité Zero Trust, k3s et Oracle Cloud."
+    }
+  }
+}

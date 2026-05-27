@@ -4,5 +4,12 @@
     "description": "Introduction to client-server architecture, HTML, CSS, JavaScript, and server-side (PhP) scripting for building web applications.",
     "relevance": "First hands-on exposure to full-stack web development and the HTTP request lifecycle.",
     "year": 2023,
-    "semester": "winter"
+    "semester": "winter",
+    "translations": {
+        "fr": {
+            "name": "Programmation Web",
+            "description": "Introduction à l'architecture client-serveur, HTML, CSS, JavaScript et scripts côté serveur (PHP) pour construire des applications web.",
+            "relevance": "Première exposition concrète au développement web full-stack et au cycle de vie d'une requête HTTP."
+        }
+    }
 }

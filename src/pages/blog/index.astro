@@ -1,30 +1,37 @@
 ---
+import { setPageLocale } from '../../i18n/setLocale';
+setPageLocale(Astro);
+
 import Layout from '../../layouts/layout.astro';
-import SectionHeading from '../../components/SectionHeading.astro';
 import { getCollection } from 'astro:content';
 import PageEntrance from "../../components/ui/PageEntrance.astro";
+import { m } from '../../paraglide/messages.js';
+import { localizeHref, getLocale } from '../../paraglide/runtime.js';
+import { HREFLANG } from '../../i18n/config';
 
 const posts = (await getCollection('blog')).sort(
     (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
+
+const dateLocale = HREFLANG[getLocale() as 'en' | 'fr'] ?? 'en-US';
 ---
 
-<Layout title="Blog - Adam Ousmer" description="Project writeups, process breakdowns, and technical deep dives.">
+<Layout title={m.blog_meta_title()} description={m.blog_meta_description()}>
     <PageEntrance>
         <header class="blog-header">
             <div class="header-content parallax" style="--parallax-speed: 0.3">
                 <div class="page-reveal">
-                    <h1>My Blog</h1>
+                    <h1>{m.blog_header_title()}</h1>
                     <span class="page-title-line"></span>
                 </div>
-                <p class="page-stagger">Projects, Processes and deep dives.</p>
+                <p class="page-stagger">{m.blog_header_subtitle()}</p>
             </div>
         </header>
 
         <main class="container">
         <div class="posts-grid">
             {posts.map((post) => (
-                <a href={`/blog/${post.slug}`} class="post-card group page-stagger">
+                <a href={localizeHref(`/blog/${post.slug}`)} class="post-card group page-stagger">
                     <div class="card-image-container">
                         {post.data.heroImage && (
                             <div class="card-image" style={`background-image: url('${post.data.heroImage}')`}></div>
@@ -33,7 +40,7 @@ const posts = (await getCollection('blog')).sort(
                     </div>
                     <div class="card-content">
                         <div class="date">
-                            {post.data.pubDate.toLocaleDateString('en-US', {
+                            {post.data.pubDate.toLocaleDateString(dateLocale, {
                                 year: 'numeric',
                                 month: 'short',
                                 day: 'numeric'
@@ -41,7 +48,7 @@ const posts = (await getCollection('blog')).sort(
                         </div>
                         <h2>{post.data.title}</h2>
                         <p>{post.data.description}</p>
-                        <div class="read-more">Read Article <span>→</span></div>
+                        <div class="read-more">{m.blog_read_more()} <span>→</span></div>
                     </div>
                 </a>
             ))}

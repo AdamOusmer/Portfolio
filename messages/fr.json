@@ -1,0 +1,70 @@
+{
+  "$schema": "https://inlang.com/schema/inlang-message-format",
+
+  "site_description_default": "Étudiant en génie logiciel à l'Université Concordia.",
+
+  "nav_aria_toggle": "Basculer la navigation",
+  "nav_label": "Navigation",
+  "nav_link_home": "Accueil",
+  "nav_link_projects": "Projets",
+  "nav_link_blog": "Blogue",
+  "nav_link_contact": "Contact",
+  "nav_link_github": "Github",
+  "nav_link_linkedin": "LinkedIn",
+  "nav_language_switch": "English",
+  "nav_language_switch_aria": "Passer à l'anglais",
+
+  "footer_role": "Étudiant en génie logiciel",
+  "footer_aria_github": "GitHub",
+  "footer_aria_linkedin": "LinkedIn",
+  "footer_aria_email": "Courriel",
+  "footer_copyright": "© {year} Adam Ousmer. Tous droits réservés.",
+
+  "hero_subtitle": "Étudiant en génie logiciel à l'Université Concordia",
+  "hero_intro": "Je construis des choses pour le web et j'étudie le fonctionnement des systèmes logiciels de bout en bout. Mon intérêt actuel porte sur le développement full-stack, l'infrastructure et la conception d'interfaces.",
+  "hero_cta_contact": "Me contacter",
+  "hero_cta_projects": "Projets",
+  "hero_scroll_label": "Défiler",
+  "hero_scroll_aria": "Défiler vers la section Compétences",
+
+  "home_meta_title": "Adam Ousmer — Étudiant en génie logiciel",
+
+  "section_skills_title": "Compétences techniques",
+  "skills_category_languages": "Langages",
+  "skills_category_frameworks": "Frameworks",
+  "skills_category_infrastructure": "Infrastructure et outils",
+
+  "section_timeline_title": "Parcours",
+  "timeline_ongoing_badge": "En cours",
+
+  "section_projects_title": "Projets",
+  "project_btn_docs": "Docs",
+  "project_btn_learn_more": "En savoir plus",
+  "project_aria_website": "Visiter le site web",
+  "project_aria_github": "Voir sur GitHub",
+
+  "section_courses_title": "Cours",
+  "section_courses_subtitle": "Cours pertinents de mon programme de génie logiciel.",
+  "semester_fall": "Automne",
+  "semester_winter": "Hiver",
+  "semester_summer": "Été",
+
+  "blog_meta_title": "Blogue — Adam Ousmer",
+  "blog_meta_description": "Comptes-rendus de projets, retours d'expérience et plongées techniques.",
+  "blog_header_title": "Mon blogue",
+  "blog_header_subtitle": "Projets, processus et plongées techniques.",
+  "blog_read_more": "Lire l'article",
+
+  "contact_meta_title": "Contact — Adam Ousmer",
+  "contact_meta_description": "Discutons d'opportunités de stage, de collaborations sur des projets, ou simplement échangeons.",
+  "contact_title": "Me contacter",
+  "contact_intro": "Je suis ouvert aux opportunités de stage, aux collaborations sur des projets et aux messages directs.",
+
+  "error_404_meta_title": "404 — Page introuvable",
+  "error_404_meta_description": "La page que vous cherchez n'existe pas.",
+  "error_404_message": "La page que vous cherchez n'existe pas ou a été déplacée.",
+  "error_500_meta_title": "500 — Erreur du serveur",
+  "error_500_meta_description": "Une erreur inattendue s'est produite de notre côté.",
+  "error_500_message": "Quelque chose s'est mal passé de notre côté. Veuillez réessayer plus tard.",
+  "error_return_home": "Retour à l'accueil"
+}

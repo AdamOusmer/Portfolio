@@ -1,16 +1,24 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import SectionHeading from '../SectionHeading.astro';
+import { m } from '../../paraglide/messages.js';
+import { getLocale } from '../../paraglide/runtime.js';
+import { asLocale } from '../../i18n/config';
+import { localized } from '../../i18n/localized';
 
 interface Props {
     courses: CollectionEntry<'courses'>[];
 }
 
 const { courses } = Astro.props;
+const loc = asLocale(getLocale());
+
+const semesterLabel = (s: 'fall' | 'winter' | 'summer') =>
+    s === 'fall' ? m.semester_fall() : s === 'winter' ? m.semester_winter() : m.semester_summer();
 ---
 
 <section id="courses">
-    <SectionHeading title="Courses" subtitle="Relevant coursework from my Software Engineering program." />
+    <SectionHeading title={m.section_courses_title()} subtitle={m.section_courses_subtitle()} />
 
     <div>
         {courses.map((course, index) => (
@@ -19,11 +27,11 @@ const { courses } = Astro.props;
                     <header>
                         <h3>
                             <span>{course.data.code}</span>
-                            {course.data.name}
+                            {localized(course.data, loc, 'name')}
                         </h3>
-                        <time>{course.data.semester} {course.data.year}</time>
+                        <time>{semesterLabel(course.data.semester)} {course.data.year}</time>
                     </header>
-                    <p>{course.data.relevance}</p>
+                    <p>{localized(course.data, loc, 'relevance')}</p>
                 </div>
             </article>
         ))}

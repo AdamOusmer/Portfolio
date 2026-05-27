@@ -1,6 +1,10 @@
 ---
+import { setPageLocale } from '../i18n/setLocale';
+setPageLocale(Astro);
+
 import Layout from '../layouts/layout.astro';
 import { getCollection } from 'astro:content';
+import { m } from '../paraglide/messages.js';
 
 import HeroSection from '../components/sections/HeroSection.astro';
 import SkillsSection from '../components/sections/SkillsSection.astro';
@@ -16,69 +20,12 @@ const courses = (await getCollection('courses')).sort(
     (a, b) => b.data.year - a.data.year
 );
 
-const timeline = [
-    {
-        year: 'January, 2022',
-        title: 'Built my first AI project',
-        description: 'Pre-dating the generative AI boom, I developed an AI program from scratch without external libraries just 3 months into my coding journey. Explored core neural network concepts by performing all calculus derivations and integrations by hand.',
-        type: 'project' as const,
-    },
-    {
-        year: 'September, 2022',
-        title: 'Started Software Engineering at Concordia University',
-        description: 'Enrolled in the Bachelor of Engineering in Software Engineering program.',
-        type: 'education' as const,
-    },
-    {
-        year: 'September, 2022',
-        title: 'Joined Space Concordia — Rocketry Division',
-        description: 'Joined the Rocketry Division in my first semester, starting with sensor calibration scripts. Over time, led the development of ThrustOptima — a tool for non-destructive analysis of combustion chambers using CT scan data.',
-        type: 'education' as const,
-        ongoing: true,
-    },
-    {
-        year: 'October, 2022',
-        title: 'CodeML Hackathon',
-        description: 'Finished second place solo on the CGI AI Challenge.',
-        type: 'project' as const,
-    },
-    {
-        year: 'May, 2023',
-        title: 'Independent Research',
-        description: 'Joined Dr. Ali Janaptour and Dr. Constantinos Constantinides on research in Formal Methods.',
-        type: 'project' as const,
-        ongoing: true,
-    },
-    {
-        year: 'July, 2025',
-        title: 'Development of GUIToolkit',
-        description: 'Built a GUI framework for Minecraft plugins with Orisis Studio.',
-        type: 'project' as const,
-    },
-    {
-        year: 'October, 2025',
-        title: 'Development of ItsBagelBot',
-        description: 'Building a microservice architecture for a Twitch bot with zero-trust security, k3s and Oracle Cloud.',
-        type: 'project' as const,
-        ongoing: true,
-    },
-    {
-        year: 'April, 2026',
-        title: 'Infrastructure Launch',
-        description: 'Deployed course projects on ItsBagelBot\'s infrastructure to test k3s, Cloudflare, New Relic and Tailscale across Oracle Compute instances.',
-        type: 'project' as const,
-    },
-    {
-        year: 'Present',
-        title: 'Seeking Internships',
-        description: 'Actively seeking Software Engineering internship opportunities to apply my experience in backend infrastructure, microservices, and full-stack development in a professional environment.',
-        type: 'career' as const,
-        ongoing: true,
-    }
-];
+const timeline = (await getCollection('timeline')).sort(
+    (a, b) => a.data.order - b.data.order
+);
 ---
 
-<Layout title="Adam Ousmer - Software Engineering Student">
+<Layout title={m.home_meta_title()}>
     <HeroSection />
 
     <main>

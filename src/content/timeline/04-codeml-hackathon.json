@@ -1,0 +1,14 @@
+{
+  "order": 4,
+  "year": "October, 2022",
+  "title": "CodeML Hackathon",
+  "description": "Finished second place solo on the CGI AI Challenge.",
+  "type": "project",
+  "translations": {
+    "fr": {
+      "year": "Octobre 2022",
+      "title": "Hackathon CodeML",
+      "description": "Deuxième place en solo pour le challenge d'IA de CGI."
+    }
+  }
+}

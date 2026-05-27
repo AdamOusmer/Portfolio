@@ -1,0 +1,15 @@
+{
+  "order": 9,
+  "year": "Present",
+  "title": "Seeking Internships",
+  "description": "Actively seeking Software Engineering internship opportunities to apply my experience in backend infrastructure, microservices, and full-stack development in a professional environment.",
+  "type": "career",
+  "ongoing": true,
+  "translations": {
+    "fr": {
+      "year": "Présent",
+      "title": "À la recherche d'un stage",
+      "description": "Activement à la recherche d'opportunités de stage en génie logiciel pour mettre à profit mon expérience en infrastructure backend, microservices et développement full-stack dans un environnement professionnel."
+    }
+  }
+}

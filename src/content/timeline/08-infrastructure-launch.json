@@ -1,0 +1,14 @@
+{
+  "order": 8,
+  "year": "April, 2026",
+  "title": "Infrastructure Launch",
+  "description": "Deployed course projects on ItsBagelBot's infrastructure to test k3s, Cloudflare, New Relic and Tailscale across Oracle Compute instances.",
+  "type": "project",
+  "translations": {
+    "fr": {
+      "year": "Avril 2026",
+      "title": "Lancement de l'infrastructure",
+      "description": "Déploiement de projets universitaires sur l'infrastructure d'ItsBagelBot pour tester k3s, Cloudflare, New Relic et Tailscale sur des instances Oracle Compute."
+    }
+  }
+}

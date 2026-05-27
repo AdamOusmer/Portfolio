@@ -4,5 +4,12 @@
   "description": "Intensive C++ course covering memory management, pointers, the Standard Template Library (STL), and advanced class design.",
   "relevance": "Developed high-performance systems skills and a deep understanding of low-level resource management.",
   "year": 2024,
-  "semester": "fall"
+  "semester": "fall",
+  "translations": {
+    "fr": {
+      "name": "Conception avancée de programmes en C++",
+      "description": "Cours intensif en C++ couvrant la gestion mémoire, les pointeurs, la Standard Template Library (STL) et la conception de classes avancée.",
+      "relevance": "A développé mes compétences en systèmes haute performance et une compréhension approfondie de la gestion des ressources bas niveau."
+    }
+  }
 }

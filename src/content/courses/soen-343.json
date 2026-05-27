@@ -4,5 +4,12 @@
   "description": "Advanced study of software architectural styles (Layered, Client-Server, Microservices) and design patterns. Focuses on creating modular, reusable, and maintainable software systems.",
   "relevance": "Provided the architectural principles used to design the decoupled system for ItsBagelBot, ensuring the Twitch bot and web dashboard could scale and deploy independently.",
   "year": 2026,
-  "semester": "winter"
+  "semester": "winter",
+  "translations": {
+    "fr": {
+      "name": "Architecture et conception logicielle",
+      "description": "Étude avancée des styles d'architecture logicielle (en couches, client-serveur, microservices) et des design patterns. Mise l'accent sur la création de systèmes logiciels modulaires, réutilisables et maintenables.",
+      "relevance": "A fourni les principes architecturaux utilisés pour concevoir le système découplé d'ItsBagelBot, permettant au bot Twitch et au tableau de bord web de se mettre à l'échelle et de se déployer indépendamment."
+    }
+  }
 }

@@ -1,0 +1,15 @@
+{
+  "order": 5,
+  "year": "May, 2023",
+  "title": "Independent Research",
+  "description": "Joined Dr. Ali Janaptour and Dr. Constantinos Constantinides on research in Formal Methods.",
+  "type": "project",
+  "ongoing": true,
+  "translations": {
+    "fr": {
+      "year": "Mai 2023",
+      "title": "Recherche indépendante",
+      "description": "Rejoint Dr Ali Janaptour et Dr Constantinos Constantinides pour des travaux de recherche en méthodes formelles."
+    }
+  }
+}

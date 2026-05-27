@@ -1,10 +1,11 @@
 ---
 import SectionHeading from "../SectionHeading.astro";
 import SkillBadge from "../ui/SkillBadge.astro";
+import { m } from '../../paraglide/messages.js';
 
 const categories = [
     {
-        title: "Languages",
+        title: m.skills_category_languages(),
         skills: [
             { name: "Python", slug: "python" },
             { name: "Java", noIcon: true },
@@ -16,14 +17,14 @@ const categories = [
         ],
     },
     {
-        title: "Frameworks",
+        title: m.skills_category_frameworks(),
         skills: [
             { name: "Astro", slug: "astro" },
             { name: "Django", slug: "django" },
         ],
     },
     {
-        title: "Infrastructure & Tools",
+        title: m.skills_category_infrastructure(),
         skills: [
             { name: "Oracle Cloud", noIcon: true },
             { name: "Kubernetes", slug: "kubernetes" },
@@ -42,7 +43,7 @@ const categories = [
 ---
 
 <section id="skills">
-    <SectionHeading title="Technical Skills" />
+    <SectionHeading title={m.section_skills_title()} />
 
     <div class="skills-container">
         {

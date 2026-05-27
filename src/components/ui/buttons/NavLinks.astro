@@ -1,20 +1,22 @@
 ---
 interface Props {
     href: string;
-    label: string; // Required (no '?')
-    rel?: string;  // Optional
-    target?: '_blank' | '_self' | '_parent' | '_top'; // Optional
+    label: string;
+    rel?: string;
+    target?: '_blank' | '_self' | '_parent' | '_top';
+    'aria-label'?: string;
 }
 
 const {
     href,
     label,
     rel,
-    target = '_self'
+    target = '_self',
+    'aria-label': ariaLabel,
 } = Astro.props;
 ---
 
-<a href={href} target={target} rel={rel}>
+<a href={href} target={target} rel={rel} aria-label={ariaLabel}>
     {label}
 </a>
 

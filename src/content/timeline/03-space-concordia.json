@@ -1,0 +1,15 @@
+{
+  "order": 3,
+  "year": "September, 2022",
+  "title": "Joined Space Concordia — Rocketry Division",
+  "description": "Joined the Rocketry Division in my first semester, starting with sensor calibration scripts. Over time, led the development of ThrustOptima — a tool for non-destructive analysis of combustion chambers using CT scan data.",
+  "type": "education",
+  "ongoing": true,
+  "translations": {
+    "fr": {
+      "year": "Septembre 2022",
+      "title": "Membre de Space Concordia — Division Rocketry",
+      "description": "Intégré à la Division Rocketry dès mon premier semestre, en commençant par des scripts de calibration de capteurs. J'ai ensuite mené le développement de ThrustOptima, un outil d'analyse non destructive de chambres de combustion à partir de tomographies."
+    }
+  }
+}

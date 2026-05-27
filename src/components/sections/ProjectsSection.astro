@@ -2,6 +2,7 @@
 import type { CollectionEntry } from 'astro:content';
 import SectionHeading from '../SectionHeading.astro';
 import ProjectCard from '../ui/ProjectCard.astro';
+import { m } from '../../paraglide/messages.js';
 
 interface Props {
     projects: CollectionEntry<'projects'>[];
@@ -11,7 +12,7 @@ const { projects } = Astro.props;
 ---
 
 <section id="projects">
-    <SectionHeading title="Projects" />
+    <SectionHeading title={m.section_projects_title()} />
 
     <div>
         {projects.map((project, index) => (

@@ -1,21 +1,32 @@
 ---
 import NavLink from '../ui/buttons/NavLinks.astro'
 import Magnetic from '../ui/Magnetic.astro'
+import { m } from '../../paraglide/messages.js';
+import { localizeHref, getLocale } from '../../paraglide/runtime.js';
+import { getRelativeLocaleUrl } from 'astro:i18n';
 
 const links = [
-    {href: "/", label: "Home"},
-    {href: "#projects", label: "Projects"},
-    {href: "/blog", label: "Blog"},
-    {href: "/contact", label: "Contact"},
+    { href: localizeHref('/'), label: m.nav_link_home() },
+    { href: '#projects', label: m.nav_link_projects() },
+    { href: localizeHref('/blog'), label: m.nav_link_blog() },
+    { href: localizeHref('/contact'), label: m.nav_link_contact() },
 ];
 
+// Build the same path in the other locale for the language switcher.
+const otherLocale = getLocale() === 'en' ? 'fr' : 'en';
+function stripLocalePrefix(pathname: string): string {
+    if (pathname === '/fr' || pathname === '/fr/') return '/';
+    if (pathname.startsWith('/fr/')) return pathname.slice(3);
+    return pathname;
+}
+const switchHref = getRelativeLocaleUrl(otherLocale, stripLocalePrefix(Astro.url.pathname));
 ---
 
 <site-navigation>
     <Magnetic pull={0.3} class="button">
         <div style="display: contents;">
-            <input class="nav-checkbox" type="checkbox" aria-label="Toggle navigation">
-            <label class="toggle" aria-label="Toggle navigation">
+            <input class="nav-checkbox" type="checkbox" aria-label={m.nav_aria_toggle()}>
+            <label class="toggle" aria-label={m.nav_aria_toggle()}>
                 <span class="bar bar-1"></span>
                 <span class="bar bar-2"></span>
                 <span class="bar bar-3"></span>
@@ -32,7 +43,7 @@ const links = [
         </defs>
     </svg>
 
-    <pre>Navigation</pre>
+    <pre>{m.nav_label()}</pre>
 
     <ul id="nav">
         {links.map((link) => (
@@ -42,8 +53,9 @@ const links = [
 
 
     <ul id="links">
-        <li><NavLink label="Github" href="https://github.com/adamousmer" rel="noopener noreferrer" target="_blank" /></li>
-        <li><NavLink label="LinkedIn" href="https://linkedin.com/in/adam-ousmer" rel="noopener noreferrer" target="_blank" /></li>
+        <li><NavLink label={m.nav_link_github()} href="https://github.com/adamousmer" rel="noopener noreferrer" target="_blank" /></li>
+        <li><NavLink label={m.nav_link_linkedin()} href="https://linkedin.com/in/adam-ousmer" rel="noopener noreferrer" target="_blank" /></li>
+        <li><NavLink label={m.nav_language_switch()} href={switchHref} aria-label={m.nav_language_switch_aria()} /></li>
     </ul>
 
 </nav>

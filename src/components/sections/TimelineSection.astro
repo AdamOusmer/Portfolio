@@ -1,22 +1,22 @@
 ---
+import type { CollectionEntry } from 'astro:content';
 import SectionHeading from "../SectionHeading.astro";
 import SkillBadge from "../ui/SkillBadge.astro";
+import { m } from '../../paraglide/messages.js';
+import { getLocale } from '../../paraglide/runtime.js';
+import { asLocale } from '../../i18n/config';
+import { localized } from '../../i18n/localized';
 
 interface Props {
-    entries: Array<{
-        year: string;
-        title: string;
-        description: string;
-        type: "education" | "project" | "career";
-        ongoing?: boolean;
-    }>;
+    entries: CollectionEntry<'timeline'>[];
 }
 
 const { entries } = Astro.props;
+const loc = asLocale(getLocale());
 ---
 
 <section id="timeline">
-    <SectionHeading title="Journey" />
+    <SectionHeading title={m.section_timeline_title()} />
 
     <div class="timeline-container">
         <div class="timeline-base-line"></div>
@@ -26,7 +26,7 @@ const { entries } = Astro.props;
             entries.map((entry) => (
                 <div class="timeline-entry">
                     <div class="timeline-date">
-                        <time>{entry.year}</time>
+                        <time>{localized(entry.data, loc, 'year')}</time>
                     </div>
 
                     <div class="timeline-marker">
@@ -36,14 +36,14 @@ const { entries } = Astro.props;
 
                     <div class="timeline-content">
                         <h3>
-                            {entry.title}
-                            {entry.ongoing && (
+                            {localized(entry.data, loc, 'title')}
+                            {entry.data.ongoing && (
                                 <span class="ongoing-badge">
-                                    <SkillBadge name="In Progress" />
+                                    <SkillBadge name={m.timeline_ongoing_badge()} />
                                 </span>
                             )}
                         </h3>
-                        <p>{entry.description}</p>
+                        <p>{localized(entry.data, loc, 'description')}</p>
                     </div>
                 </div>
             ))
