@@ -52,7 +52,10 @@ const description = localized(project.data, loc, 'description');
                     </Magnetic>
                 )}
                 {project.data.docsSlug && (
-                    <Button href={localizeHref(`/${project.data.docsSlug}/`)} text={m.project_btn_docs()} />
+                    <Button 
+                        href={project.data.docsSlug.startsWith('http') ? project.data.docsSlug : localizeHref(`/${project.data.docsSlug}/`)} 
+                        text={m.project_btn_docs()} 
+                    />
                 )}
                 {project.data.blogSlug && (
                     <Button href={localizeHref(`/blog/${project.data.blogSlug}`)} text={m.project_btn_learn_more()} />

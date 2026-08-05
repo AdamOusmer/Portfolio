@@ -31,7 +31,7 @@ const dateLocale = HREFLANG[getLocale() as 'en' | 'fr'] ?? 'en-US';
         <main class="container">
         <div class="posts-grid">
             {posts.map((post) => (
-                <a href={localizeHref(`/blog/${post.slug}`)} class="post-card group page-stagger">
+                <a href={localizeHref(`/blog/${post.id}`)} class="post-card group page-stagger">
                     <div class="card-image-container">
                         {post.data.heroImage && (
                             <div class="card-image" style={`background-image: url('${post.data.heroImage}')`}></div>

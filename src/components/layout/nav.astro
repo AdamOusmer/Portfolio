@@ -59,7 +59,7 @@ const switchHref = getRelativeLocaleUrl(otherLocale, stripLocalePrefix(Astro.url
     </ul>
 
 </nav>
-
+</site-navigation>
 
 <style>
 
@@ -360,4 +360,5 @@ const switchHref = getRelativeLocaleUrl(otherLocale, stripLocalePrefix(Astro.url
     if (!customElements.get('site-navigation')) {
         customElements.define('site-navigation', SiteNavigation);
     }
+
 </script>

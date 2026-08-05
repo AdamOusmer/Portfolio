@@ -6,6 +6,7 @@ interface Props {
     returnSpeed?: number;
     pointerRadius?: number;
     repulsionForce?: number;
+    interactive?: boolean;
 }
 
 const {
@@ -14,7 +15,8 @@ const {
     nodeSpeed = 0.3,
     returnSpeed = 0.02,
     pointerRadius = 80,
-    repulsionForce = 0.2
+    repulsionForce = 0.2,
+    interactive = true
 } = Astro.props;
 ---
 
@@ -25,6 +27,7 @@ const {
     data-return-speed={returnSpeed}
     data-pointer-radius={pointerRadius}
     data-repulsion-force={repulsionForce}
+    data-interactive={interactive}
     style="display: contents;">
     <canvas id="nodes" class="nodes-canvas" aria-hidden="true" role="presentation"></canvas>
 </canvas-background>
@@ -51,6 +54,7 @@ const {
         returnSpeed: number;
         pointerRadius: number;
         repulsionForce: number;
+        interactive: boolean;
     }
 
     const DEFAULT_CONFIG: CanvasConfig = {
@@ -60,6 +64,7 @@ const {
         returnSpeed: 0.02,
         pointerRadius: 80,
         repulsionForce: 0.2,
+        interactive: true,
     };
 
     class CanvasBackground extends HTMLElement {
@@ -499,6 +504,10 @@ const {
                 const { signal } = this.abortController;
 
                 window.addEventListener('mousemove', (event) => {
+                    if (!this.config.interactive) {
+                        mouse.isActive = false;
+                        return;
+                    }
                     const rect = this.canvas.getBoundingClientRect();
                     mouse.x = event.clientX - rect.left;
                     mouse.y = event.clientY - rect.top;
@@ -523,7 +532,7 @@ const {
     }
 </script>
 
-<script define:vars={{ nodeCount, connectDistance, nodeSpeed, returnSpeed, pointerRadius, repulsionForce }}>
+<script define:vars={{ nodeCount, connectDistance, nodeSpeed, returnSpeed, pointerRadius, repulsionForce, interactive }}>
     (function () {
         const script = document.currentScript;
         customElements.whenDefined("canvas-background").then(function () {
@@ -531,7 +540,7 @@ const {
             if (!el || el.tagName !== "CANVAS-BACKGROUND") return;
             const Ctor = customElements.get("canvas-background");
             if (Ctor && typeof Ctor.configure === "function") {
-                Ctor.configure(el, { nodeCount: nodeCount, connectDistance: connectDistance, nodeSpeed: nodeSpeed, returnSpeed: returnSpeed, pointerRadius: pointerRadius, repulsionForce: repulsionForce });
+                Ctor.configure(el, { nodeCount: nodeCount, connectDistance: connectDistance, nodeSpeed: nodeSpeed, returnSpeed: returnSpeed, pointerRadius: pointerRadius, repulsionForce: repulsionForce, interactive: interactive });
             }
         });
     })();

@@ -14,6 +14,7 @@
   "githubUrl": "https://github.com/AdamOusmer/itsbagelbot",
   "websiteUrl": "https://itsbagelbot.com",
   "docsSlug": "https://docs.itsbagelbot.com",
+  "blogSlug": "itsbagelbot",
   "featured": true,
   "translations": {
     "fr": {
