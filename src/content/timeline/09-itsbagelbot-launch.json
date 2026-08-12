@@ -1,0 +1,15 @@
+{
+  "order": 9,
+  "year": "July 2026",
+  "title": "ItsBagelBot's Alpha Launch",
+  "description": "Full launch of ItsBagelBot as an Alpha with 4 different servers for full HA excluding k3s control plane.",
+  "type": "project",
+  "ongoing": false,
+  "translations": {
+    "fr": {
+      "year": "Juillet 2026",
+      "title": "Lancement de l'alpha d'ItsBagelBot",
+      "description": "Déploiement de l'alpah de ItsBagelBot sur 4 serveurs different pour High-availability excepté du plan de contrôle k3s."
+    }
+  }
+}
