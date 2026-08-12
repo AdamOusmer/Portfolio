@@ -1,0 +1,21 @@
+{
+  "title": "itsmavey.com",
+  "description": "ItsMavey's gaming portfolio and dynamic API built with Astro. Features edge caching via Cloudflare Workers and KV storage to optimize API responses, ensuring low-latency data fetching and high performance.",
+  "year": 2026,
+  "tags": [
+    "Astro",
+    "TypeScript",
+    "Cloudflare Workers",
+    "Cloudflare KV",
+    "APIs",
+    "Edge Caching"
+  ],
+  "githubUrl": "https://github.com/adamousmer/itsmavey",
+  "websiteUrl": "https://itsmavey.com",
+  "featured": true,
+  "translations": {
+    "fr": {
+      "description": "Portfolio gaming d'ItsMavey et API dynamique développés avec Astro. Intègre la mise en cache Edge via Cloudflare Workers et le stockage KV pour optimiser les réponses d'API, garantissant une faible latence et une haute performance."
+    }
+  }
+}
