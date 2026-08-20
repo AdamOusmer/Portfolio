@@ -123,7 +123,9 @@ const categories = [
 
     @supports (animation-timeline: view()) {
         .group-title::after {
-            animation: subtitleLine linear both;
+            animation-name: subtitleLine;
+            animation-timing-function: linear;
+            animation-fill-mode: both;
             animation-timeline: view();
             animation-range: entry 0% cover 30%;
         }
@@ -153,7 +155,6 @@ const categories = [
         gap: 0.6rem !important;
         background: rgba(17, 24, 39, 0.6) !important;
         backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
         box-shadow: 0 4px 20px -10px rgba(0, 0, 0, 0.5);
     }
 
