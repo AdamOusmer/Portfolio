@@ -1,0 +1,21 @@
+{
+  "title": "bolota",
+  "description": "Built a deterministic avatar library, published to npm as @luzir/bolota. One string always renders one face: seeded silhouette, OKLCh palette and eye pair, byte-identical across every runtime and pinned by a committed fixture of 1343 renders. Ported an animation engine on top so the same face blinks, drifts and tracks the cursor, with every state drawn on the seed's own silhouette rather than a stock shape. Released through npm Trusted Publishing with signed provenance, and shipped to production in the ItsBagelBot console.",
+  "year": 2026,
+  "tags": [
+    "TypeScript",
+    "Bun",
+    "SVG",
+    "Library Development",
+    "Animation",
+    "npm"
+  ],
+  "githubUrl": "https://github.com/AdamOusmer/bolota",
+  "websiteUrl": "https://www.npmjs.com/package/@luzir/bolota",
+  "featured": false,
+  "translations": {
+    "fr": {
+      "description": "Conception d'une bibliothèque d'avatars déterministes, publiée sur npm sous @luzir/bolota. Une même chaîne rend toujours le même visage: silhouette, palette OKLCh et yeux dérivés de la graine, identiques dans tous les environnements et figés par une fixture de 1343 rendus. Moteur d'animation porté par-dessus pour que ce visage cligne des yeux, dérive et suive le curseur, chaque état étant dessiné sur la silhouette de la graine plutôt que sur une forme générique. Publiée via npm Trusted Publishing avec provenance signée, et déployée en production dans la console ItsBagelBot."
+    }
+  }
+}
