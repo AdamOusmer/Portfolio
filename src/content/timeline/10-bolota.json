@@ -1,0 +1,15 @@
+{
+  "order": 10,
+  "year": "August 2026",
+  "title": "Published bolota",
+  "description": "Forked blobatar into my own deterministic avatar library and published it to npm as @luzir/bolota, with bloub's animation engine ported in. Now rendering every avatar in the ItsBagelBot console.",
+  "type": "project",
+  "ongoing": false,
+  "translations": {
+    "fr": {
+      "year": "Août 2026",
+      "title": "Publication de bolota",
+      "description": "Fork de blobatar transformé en ma propre bibliothèque d'avatars déterministes, publiée sur npm sous @luzir/bolota, avec le moteur d'animation de bloub porté par-dessus. Elle rend désormais tous les avatars de la console ItsBagelBot."
+    }
+  }
+}

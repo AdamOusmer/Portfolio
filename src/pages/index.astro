@@ -12,8 +12,13 @@ import TimelineSection from '../components/sections/TimelineSection.astro';
 import ProjectsSection from '../components/sections/ProjectsSection.astro';
 import CoursesSection from '../components/sections/CoursesSection.astro';
 
+// Newest first, and within a year the featured ones lead. Without that second
+// term a same-year tie falls back to filename order, which put bolota ahead of
+// ItsBagelBot purely because b sorts before i.
 const projects = (await getCollection('projects')).sort(
-    (a, b) => b.data.year - a.data.year
+    (a, b) =>
+        b.data.year - a.data.year ||
+        Number(b.data.featured) - Number(a.data.featured)
 );
 
 const courses = (await getCollection('courses')).sort(

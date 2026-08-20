@@ -44,7 +44,9 @@ const { title, subtitle } = Astro.props;
 
     @supports (animation-timeline: view()) {
         .section-heading h2::after {
-            animation: headingLine linear both;
+            animation-name: headingLine;
+            animation-timing-function: linear;
+            animation-fill-mode: both;
             animation-timeline: view();
             animation-range: entry 0% cover 30%;
         }

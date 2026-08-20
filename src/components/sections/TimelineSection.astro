@@ -254,7 +254,9 @@ const loc = asLocale(getLocale());
         }
 
         .timeline-progress-line {
-            animation: scaleLine linear both;
+            animation-name: scaleLine;
+            animation-timing-function: linear;
+            animation-fill-mode: both;
             animation-timeline: --timeline;
             animation-range: cover 0% cover 100%;
         }
@@ -270,29 +272,39 @@ const loc = asLocale(getLocale());
         }
 
         .timeline-entry:nth-child(odd) .timeline-date {
-            animation: slideInOutLeft linear both;
+            animation-name: slideInOutLeft;
+            animation-timing-function: linear;
+            animation-fill-mode: both;
             animation-timeline: --entry;
             animation-range: cover 0% cover 100%;
         }
         .timeline-entry:nth-child(odd) .timeline-content {
-            animation: slideInOutRight linear both;
+            animation-name: slideInOutRight;
+            animation-timing-function: linear;
+            animation-fill-mode: both;
             animation-timeline: --entry;
             animation-range: cover 0% cover 100%;
         }
 
         .timeline-entry:nth-child(even) .timeline-date {
-            animation: slideInOutRight linear both;
+            animation-name: slideInOutRight;
+            animation-timing-function: linear;
+            animation-fill-mode: both;
             animation-timeline: --entry;
             animation-range: cover 0% cover 100%;
         }
         .timeline-entry:nth-child(even) .timeline-content {
-            animation: slideInOutLeft linear both;
+            animation-name: slideInOutLeft;
+            animation-timing-function: linear;
+            animation-fill-mode: both;
             animation-timeline: --entry;
             animation-range: cover 0% cover 100%;
         }
 
         .timeline-entry .ring {
-            animation: scrollRing linear both;
+            animation-name: scrollRing;
+            animation-timing-function: linear;
+            animation-fill-mode: both;
             animation-timeline: --entry;
             animation-range: cover 0% cover 100%;
         }
@@ -300,7 +312,9 @@ const loc = asLocale(getLocale());
         @media (max-width: 768px) {
             .timeline-entry .timeline-date,
             .timeline-entry .timeline-content {
-                animation: slideInOutRight linear both !important;
+                animation-name: slideInOutRight !important;
+                animation-timing-function: linear !important;
+                animation-fill-mode: both !important;
                 animation-timeline: --entry !important;
                 animation-range: cover 0% cover 100% !important;
             }
