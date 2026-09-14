@@ -1,0 +1,15 @@
+{
+  "order": 12,
+  "year": "Winter 2027",
+  "title": "Seeking Internships",
+  "description": "Actively seeking Software Engineering and AI internship opportunities for Winter 2027 to apply my experience in backend infrastructure, microservices, and full-stack development in a professional environment.",
+  "type": "career",
+  "ongoing": true,
+  "translations": {
+    "fr": {
+      "year": "Hiver 2027",
+      "title": "À la recherche d'un stage",
+      "description": "Activement à la recherche d'opportunités de stage en génie logiciel et IA pour l'hiver 2027 afin de mettre à profit mon expérience en infrastructure backend, microservices et développement full-stack dans un environnement professionnel."
+    }
+  }
+}
