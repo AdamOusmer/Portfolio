@@ -1,0 +1,14 @@
+{
+  "order": 12,
+  "year": "October 2026",
+  "title": "Winner of CodeML 2026 — IVADO Challenge",
+  "description": "Won the IVADO challenge solo at CodeML 2026, against 23 teams of four.",
+  "type": "project",
+  "translations": {
+    "fr": {
+      "year": "Octobre 2026",
+      "title": "Gagnant de CodeML 2026 — Challenge IVADO",
+      "description": "Première place en solo au challenge IVADO de CodeML 2026, face à 23 équipes de quatre."
+    }
+  }
+}
